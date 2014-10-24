@@ -11,6 +11,9 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         [Option('o', "output", DefaultValue = "templates.dotSettings", HelpText = "Name of the file to output")]
         public string OutputFile { get; set; }
+
+        [Option('r', "readme", DefaultValue = "README.md", HelpText = "Name of the readme file to generate")]
+        public string ReadMeFile { get; set; }
     }
 
     [Verb("decompile", HelpText = "Decompile .dotSettings file to multiple markdown files")]

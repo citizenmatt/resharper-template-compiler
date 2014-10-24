@@ -43,6 +43,12 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var parser = new TemplateParser();
             foreach (var inputFile in inputFiles)
             {
+                if (inputFile.EndsWith("readme.md", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Console.WriteLine("Ignoring readme.md...");
+                    continue;
+                }
+
                 var markdown = File.ReadAllText(inputFile);
                 store.AddTemplate(parser.Parse(markdown));
                 // TODO: Concatenate markdown to a readme.md
@@ -51,6 +57,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var stream = File.Open(compileOptions.OutputFile, FileMode.Create, FileAccess.Write);
             using(var streamWriter = new StreamWriter(stream))
                 SettingsSerialisation.SerialiseToXaml(streamWriter, serialisation);
+
+            stream = File.Open(compileOptions.ReadMeFile, FileMode.Create, FileAccess.Write);
+            using (var streamWriter = new StreamWriter(stream))
+            {
+                var readme = new ReadmeFormatter(streamWriter);
+                readme.FormatTemplates(store);
+            }
         }
 
         private static IEnumerable<string> ExpandWildcards(IEnumerable<string> inputFiles)

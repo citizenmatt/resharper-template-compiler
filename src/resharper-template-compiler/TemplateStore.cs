@@ -5,14 +5,23 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
     public class TemplateStore
     {
         private readonly SettingsStore liveTemplateSettings;
+        private readonly IList<Template> templates; 
 
         public TemplateStore(SettingsSerialisation settingsSerialisation)
         {
             liveTemplateSettings = settingsSerialisation.GetSettings("Default", "PatternsAndTemplates", "LiveTemplates");
+            templates = new List<Template>();
+        }
+
+        public IEnumerable<Template> Templates
+        {
+            get { return templates; }
         }
 
         public void AddTemplate(Template template)
         {
+            templates.Add(template);
+
             var templateSettings = liveTemplateSettings.AddIndexedSettings("Template", template.Guid);
             templateSettings.AddValue("Shortcut", template.Shortcut);
             templateSettings.AddValue("Description", template.Description);
