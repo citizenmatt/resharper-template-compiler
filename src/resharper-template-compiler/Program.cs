@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using CitizenMatt.ReSharper.TemplateCompiler.Markdown;
 using CommandLine;
 
@@ -9,6 +10,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 {
     class Program
     {
+        private static Regex InvalidFileCharsRegex = new Regex(string.Format("[{0}]", Regex.Escape(new string(Path.GetInvalidFileNameChars()))), RegexOptions.Compiled);
+
         static int Main(string[] args)
         {
             // Case sensitive by default. Meh.
@@ -84,7 +87,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
             foreach (var template in templates)
             {
-                var file = File.OpenWrite(Path.Combine(decompileOptions.OutDir, template.Shortcut + ".md"));
+                var filename = InvalidFileCharsRegex.Replace(template.Shortcut + ".md", string.Empty);
+                var file = File.OpenWrite(Path.Combine(decompileOptions.OutDir, filename));
                 using (var writer = new StreamWriter(file))
                 {
                     var formatter = new TemplateFormatter(writer);
