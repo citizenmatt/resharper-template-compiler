@@ -38,10 +38,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var index = GetIndexedValues<bool>(templatePath, "Applicability").First().Key;
             Enum.TryParse(index, out template.Type);
             template.Shortcut = GetValue<string>(templatePath, "Shortcut");
-            template.Description = GetValue<string>(templatePath, "Description");
+            string description;
+            if (!TryGetValue(templatePath, "Description", out description))
+                Console.WriteLine("Warning: Template {0} does not have a description.", template.Shortcut);
+            template.Description = description;
             template.Text = GetValue<string>(templatePath, "Text");
-            template.Reformat = GetValue<bool>(templatePath, "Reformat");
-            template.ShortenQualifiedReferences = GetValue<bool>(templatePath, "ShortenQualifiedReferences");
+            template.Reformat = TryGetValue(templatePath, "Reformat", true);
+            template.ShortenQualifiedReferences = TryGetValue<bool>(templatePath, "ShortenQualifiedReferences", true);
             template.Scopes = DeserialiseScopes(templatePath);
             template.Categories = DeserialiseCategories(templatePath);
             template.Fields = DeserialiseFields(templatePath);
@@ -151,6 +154,12 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         private T GetValue<T>(IEnumerable<string> path, string name)
         {
             return (T) trie.GetValue(MakePath(path, name, SerialisationMetadata.EntryValue));
+        }
+
+        private T TryGetValue<T>(IEnumerable<string> path, string name, T defaultValue)
+        {
+            T value;
+            return TryGetValue(path, name, out value) ? value : defaultValue;
         }
 
         private bool TryGetValue<T>(IEnumerable<string> path, string name, out T value)
