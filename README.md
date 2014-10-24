@@ -10,13 +10,13 @@ It's most definitely a machine readable file format, and not intended for human 
 
 Maintaining a template file requires mounting the file in ReSharper -> Manage Options and using the Template Explorer, but if you ever encounter a file in a source control repo, you're on your own.
 
-This utility will decompile a `.dotSettings` file into a number of structured markdown files, which are much more readable, especially on GitHub, and can then compile the markdown files into a new `.dotSettings` file ready for distribution.
+This utility will decompile a `.dotSettings` file into a number of structured markdown files, which are much more readable, especially on GitHub, and can then compile the markdown files into a new `.dotSettings` file ready for distribution. When compiling, it will also create a simple README.md, listing all template shortcuts and descriptions, grouped by category.
 
 And yes, I know this isn't really a compiler, but it takes a bunch of plain text, human readable files and generates a single unreadable, machine friendly file. That sounds like a compiler to me.
 
 ## Samples
 
-You can see some samples [here](/samples/xunit).
+You can see some samples [here](/samples/xunit). GitHub will display the sample [README.md](/samples/xunit/README.md) listing each template's shortcut and description, and the shortcut will be a link to the individual file. For example, [theory.md](/samples/xunit/theory.md) shows a template with a shortcut of `theory`, a description of "Create theory method" and the text of the template is shown in a code block. GitHub rather nicely displays the metadata as a simple table.
 
 ## File Format
 

@@ -4,67 +4,67 @@
 
 Shortcut | Description
 ---------|------------
-a1 | xUnit.net Assert.Single
-ac | xUnit.net Assert.Contains
-adnc | xUnit.net Assert.DoesNotContain
-adnt | xUnit.net Assert.DoesNotThrow
-ae | xUnit.net Assert.Equal
-af | xUnit.net Assert.False
-aiaf | xUnit.net Assert.IsAssignableFrom
-aint | xUnit.net Assert.IsNotType
-air | xUnit.net Assert.InRange
-ait | xUnit.net Assert.IsType
-am | xUnit.net Assert.Empty
-an | xUnit.net Assert.Null
-ane | xUnit.net Assert.NotEqual
-anir | xUnit.net Assert.NotInRange
-anm | xUnit.net Assert.NotEmpty
-ann | xUnit.net Assert.NotNull
-ans | xUnit.net Assert.NotSame
-apc | xUnit.net Assert.PropertyChanged
-as | xUnit.net Assert.Same
-at | xUnit.net Assert.True
-athr | xUnit.net Assert.Throws
-fa | xUnit.net FactAttribute
-fact | Create a fact test method
-ida | xUnit.net InlineDataAttribute
-pda | xUnit.net PropertyDataAttribute
-ta | xUnit.net TheoryAttribute
-theory | Create theory method
-xtc | xUnit.net test class
+[a1](a1.md) | xUnit.net Assert.Single
+[ac](ac.md) | xUnit.net Assert.Contains
+[adnc](adnc.md) | xUnit.net Assert.DoesNotContain
+[adnt](adnt.md) | xUnit.net Assert.DoesNotThrow
+[ae](ae.md) | xUnit.net Assert.Equal
+[af](af.md) | xUnit.net Assert.False
+[aiaf](aiaf.md) | xUnit.net Assert.IsAssignableFrom
+[aint](aint.md) | xUnit.net Assert.IsNotType
+[air](air.md) | xUnit.net Assert.InRange
+[ait](ait.md) | xUnit.net Assert.IsType
+[am](am.md) | xUnit.net Assert.Empty
+[an](an.md) | xUnit.net Assert.Null
+[ane](ane.md) | xUnit.net Assert.NotEqual
+[anir](anir.md) | xUnit.net Assert.NotInRange
+[anm](anm.md) | xUnit.net Assert.NotEmpty
+[ann](ann.md) | xUnit.net Assert.NotNull
+[ans](ans.md) | xUnit.net Assert.NotSame
+[apc](apc.md) | xUnit.net Assert.PropertyChanged
+[as](as.md) | xUnit.net Assert.Same
+[at](at.md) | xUnit.net Assert.True
+[athr](athr.md) | xUnit.net Assert.Throws
+[fa](fa.md) | xUnit.net FactAttribute
+[fact](fact.md) | Create a fact test method
+[ida](ida.md) | xUnit.net InlineDataAttribute
+[pda](pda.md) | xUnit.net PropertyDataAttribute
+[ta](ta.md) | xUnit.net TheoryAttribute
+[theory](theory.md) | Create theory method
+[xtc](xtc.md) | xUnit.net test class
 
 ## xunit-assert
 
 Shortcut | Description
 ---------|------------
-a1 | xUnit.net Assert.Single
-ac | xUnit.net Assert.Contains
-adnc | xUnit.net Assert.DoesNotContain
-adnt | xUnit.net Assert.DoesNotThrow
-ae | xUnit.net Assert.Equal
-af | xUnit.net Assert.False
-aiaf | xUnit.net Assert.IsAssignableFrom
-aint | xUnit.net Assert.IsNotType
-air | xUnit.net Assert.InRange
-ait | xUnit.net Assert.IsType
-am | xUnit.net Assert.Empty
-an | xUnit.net Assert.Null
-ane | xUnit.net Assert.NotEqual
-anir | xUnit.net Assert.NotInRange
-anm | xUnit.net Assert.NotEmpty
-ann | xUnit.net Assert.NotNull
-ans | xUnit.net Assert.NotSame
-apc | xUnit.net Assert.PropertyChanged
-as | xUnit.net Assert.Same
-at | xUnit.net Assert.True
-athr | xUnit.net Assert.Throws
+[a1](a1.md) | xUnit.net Assert.Single
+[ac](ac.md) | xUnit.net Assert.Contains
+[adnc](adnc.md) | xUnit.net Assert.DoesNotContain
+[adnt](adnt.md) | xUnit.net Assert.DoesNotThrow
+[ae](ae.md) | xUnit.net Assert.Equal
+[af](af.md) | xUnit.net Assert.False
+[aiaf](aiaf.md) | xUnit.net Assert.IsAssignableFrom
+[aint](aint.md) | xUnit.net Assert.IsNotType
+[air](air.md) | xUnit.net Assert.InRange
+[ait](ait.md) | xUnit.net Assert.IsType
+[am](am.md) | xUnit.net Assert.Empty
+[an](an.md) | xUnit.net Assert.Null
+[ane](ane.md) | xUnit.net Assert.NotEqual
+[anir](anir.md) | xUnit.net Assert.NotInRange
+[anm](anm.md) | xUnit.net Assert.NotEmpty
+[ann](ann.md) | xUnit.net Assert.NotNull
+[ans](ans.md) | xUnit.net Assert.NotSame
+[apc](apc.md) | xUnit.net Assert.PropertyChanged
+[as](as.md) | xUnit.net Assert.Same
+[at](at.md) | xUnit.net Assert.True
+[athr](athr.md) | xUnit.net Assert.Throws
 
 ## xunit-attribute
 
 Shortcut | Description
 ---------|------------
-fa | xUnit.net FactAttribute
-ida | xUnit.net InlineDataAttribute
-pda | xUnit.net PropertyDataAttribute
-ta | xUnit.net TheoryAttribute
+[fa](fa.md) | xUnit.net FactAttribute
+[ida](ida.md) | xUnit.net InlineDataAttribute
+[pda](pda.md) | xUnit.net PropertyDataAttribute
+[ta](ta.md) | xUnit.net TheoryAttribute
 

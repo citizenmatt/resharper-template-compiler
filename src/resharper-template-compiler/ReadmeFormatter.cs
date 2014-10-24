@@ -27,12 +27,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
             foreach (var category in templatesByCategory.Keys.OrderBy(s => s))
             {
+                // TODO: Perhaps split this down into template type - Live, Surround or File
                 writer.WriteLine("## {0}", category);
                 writer.WriteLine();
                 writer.WriteLine("Shortcut | Description");
                 writer.WriteLine("---------|------------");
                 foreach (var template in templatesByCategory[category].OrderBy(t => t.Shortcut))
-                    writer.WriteLine("{0} | {1}", template.Shortcut, template.Description);
+                    writer.WriteLine("[{0}]({0}.md) | {1}", template.Shortcut, template.Description);
 
                 writer.WriteLine();
             }
