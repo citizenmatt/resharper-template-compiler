@@ -88,7 +88,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             foreach (var template in templates)
             {
                 var filename = InvalidFileCharsRegex.Replace(template.Shortcut + ".md", string.Empty);
-                var file = File.OpenWrite(Path.Combine(decompileOptions.OutDir, filename));
+                var file = File.Open(Path.Combine(decompileOptions.OutDir, filename), FileMode.Create, FileAccess.Write);
                 using (var writer = new StreamWriter(file))
                 {
                     var formatter = new TemplateFormatter(writer);
