@@ -15,7 +15,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 
         public void FormatTemplate(Template template)
         {
-            writer.WriteLine("----");
+            writer.WriteLine("---");
             writer.WriteLine("guid: {0}", template.Guid);
             writer.WriteLine("type: {0}", template.Type);
             writer.WriteLine("reformat: {0}", template.Reformat);
@@ -23,7 +23,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             writer.WriteLine("categories: {0}", string.Join(", ", template.Categories));
             FormatScopes(template);
             FormatFields(template);
-            writer.WriteLine("----");
+            writer.WriteLine("---");
             writer.WriteLine();
             writer.WriteLine("# {0}", template.Shortcut);
             writer.WriteLine();
