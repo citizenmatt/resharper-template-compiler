@@ -48,7 +48,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 xmlWriter.WriteAttributeString("xmlns", "x", null, "http://schemas.microsoft.com/winfx/2006/xaml");
                 xmlWriter.WriteAttributeString("xmlns", "s", null, "clr-namespace:System;assembly=mscorlib");
                 xmlWriter.WriteAttributeString("xmlns", "ss", null, "urn:shemas-jetbrains-com:settings-storage-xaml");
-                foreach (var entry in serialisation.dictionary.OrderBy(p => p.Key))
+                foreach (var entry in serialisation.dictionary.OrderBy(p => p.Key).Where(p => p.Value != null))
                 {
                     xmlWriter.WriteStartElement("s", entry.Value.GetType().Name,
                         "clr-namespace:System;assembly=mscorlib");

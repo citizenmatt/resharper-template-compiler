@@ -25,18 +25,26 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             writer.WriteLine("# Templates");
             writer.WriteLine();
 
+            if (templatesByCategory.Count == 0)
+                FormatTemplates(templates.Templates);
+
             foreach (var category in templatesByCategory.Keys.OrderBy(s => s))
             {
                 // TODO: Perhaps split this down into template type - Live, Surround or File
                 writer.WriteLine("## {0}", category);
-                writer.WriteLine();
-                writer.WriteLine("Shortcut | Description");
-                writer.WriteLine("---------|------------");
-                foreach (var template in templatesByCategory[category].OrderBy(t => t.Shortcut))
-                    writer.WriteLine("[{0}]({0}.md) | {1}", template.Shortcut, template.Description);
-
-                writer.WriteLine();
+                FormatTemplates(templatesByCategory[category]);
             }
+        }
+
+        private void FormatTemplates(IEnumerable<Template> templates)
+        {
+            writer.WriteLine();
+            writer.WriteLine("Shortcut | Description");
+            writer.WriteLine("---------|------------");
+            foreach (var template in templates.OrderBy(t => t.Shortcut))
+                writer.WriteLine("[{0}]({0}.md) | {1}", template.Shortcut, template.Description);
+
+            writer.WriteLine();
         }
     }
 }

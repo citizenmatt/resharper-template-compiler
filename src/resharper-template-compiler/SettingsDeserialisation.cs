@@ -44,7 +44,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             template.Description = description;
             template.Text = GetValue<string>(templatePath, "Text");
             template.Reformat = TryGetValue(templatePath, "Reformat", true);
-            template.ShortenQualifiedReferences = TryGetValue<bool>(templatePath, "ShortenQualifiedReferences", true);
+            template.ShortenQualifiedReferences = TryGetValue(templatePath, "ShortenQualifiedReferences", true);
             template.Scopes = DeserialiseScopes(templatePath);
             template.Categories = DeserialiseCategories(templatePath);
             template.Fields = DeserialiseFields(templatePath);
