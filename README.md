@@ -12,13 +12,17 @@ Maintaining a template file requires mounting the file in ReSharper -> Manage Op
 
 This utility will decompile a `.dotSettings` file into a number of structured markdown files, which are much more readable, especially on GitHub, and can then compile the markdown files into a new `.dotSettings` file ready for distribution.
 
-And yes, I know this is really a compiler, but it takes a bunch of plain text, human readable files and generates a single unreadable, machine friendly file. That sounds like a compiler to me.
+And yes, I know this isn't really a compiler, but it takes a bunch of plain text, human readable files and generates a single unreadable, machine friendly file. That sounds like a compiler to me.
+
+## Samples
+
+You can see some samples [here](/samples/xunit).
 
 ## File Format
 
 The markdown files look like this:
 
-    ----
+    ---
     guid: 58defe14-2132-4e4e-8126-5fa7e9a8f472
     type: Live
     reformat: True
@@ -27,7 +31,7 @@ The markdown files look like this:
     scopes: InCSharpTypeMember(minimumLanguageVersion=2.0)
     parameterOrder: TheoryMethodName, DataAttribute, parameters
     DataAttribute-expression: completeSmart()
-    ----
+    ---
 
     # theory
 
