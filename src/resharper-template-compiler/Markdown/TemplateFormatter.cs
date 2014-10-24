@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 {
     public class TemplateFormatter
     {
+        private static Regex NoramliseRegex = new Regex(@"\r\n|\n\r|\n|\r", RegexOptions.Compiled);
+
         private readonly TextWriter writer;
 
         public TemplateFormatter(TextWriter writer)
@@ -30,7 +33,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             writer.WriteLine(template.Description);
             writer.WriteLine();
             writer.WriteLine("```");
-            writer.WriteLine(template.Text);
+            writer.WriteLine(NoramliseRegex.Replace(template.Text, "\r\n"));
             writer.WriteLine("```");
         }
 
