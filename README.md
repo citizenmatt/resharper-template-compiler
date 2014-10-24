@@ -77,9 +77,11 @@ The values for the scopes are the values that are used in the `.dotSettings` fil
 
 Each parameter can include an expression that describes the macro, and its parameters, that executes when the parameter field is tabbed into. The name of the metadata item is based on the parameter name plus `-expression`. So for a parameter called `suffix`, the expression would be:
 
-   suffix-expression: constant(".min")
+    suffix-expression: constant(".min")
 
 The expression comes from the macro definitions in ReSharper. Each macro has a name, in this example `"constant"`, and all parameters are added as a comma separated list in parentheses. Again, the values here are best retrieved by decompiling an existing `.dotSettings` file.
+
+**TODO**: It might be nice to have a list of known expressions here.
 
 ## Usage
 
