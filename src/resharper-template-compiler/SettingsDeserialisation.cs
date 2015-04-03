@@ -168,7 +168,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             object o;
             if (trie.TryGetValue(MakePath(path, name, SerialisationMetadata.EntryValue), out o))
             {
-                value = o == null ? default(T) : (T) o;
+                value = o == null ? default(T) : (T) Convert.ChangeType(o, typeof(T));
                 return true;
             }
             return false;
