@@ -60,7 +60,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             {
                 var fieldPath = MakePath(fieldsPath, SerialisationMetadata.FormatKey(key));
                 bool editable = true;
-                int initialRange;
+                long initialRange;
                 if (TryGetValue(fieldPath, "InitialRange", out initialRange))
                     editable = initialRange != -1;
                 string expression;
@@ -168,7 +168,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             object o;
             if (trie.TryGetValue(MakePath(path, name, SerialisationMetadata.EntryValue), out o))
             {
-                value = o == null ? default(T) : (T) o;
+                value = o == null ? default(T) : (T) Convert.ChangeType(o, typeof(T));
                 return true;
             }
             return false;
