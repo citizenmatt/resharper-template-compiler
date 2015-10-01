@@ -4,7 +4,7 @@ type: Live
 reformat: True
 shortenReferences: True
 categories: mnemonics
-scopes: InCSharpTypeAndNamespace(minimumLanguageVersion=2.0), InCSharpTypeMember(minimumLanguageVersion=2.0)
+scopes: InCSharpTypeAndNamespace(minimumLanguageVersion=2.0); InCSharpTypeMember(minimumLanguageVersion=2.0)
 parameterOrder: methodname
 methodname-expression: constant("MyMethod")
 ---

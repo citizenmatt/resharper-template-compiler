@@ -4,7 +4,7 @@ type: Live
 reformat: True
 shortenReferences: True
 categories: mnemonics
-scopes: InVBTypeMember(languageLevel=Vb8), InVBTypeAndNamespace(languageLevel=Vb8)
+scopes: InVBTypeMember(languageLevel=Vb8); InVBTypeAndNamespace(languageLevel=Vb8)
 parameterOrder: fieldname
 fieldname-expression: constant("fieldname")
 ---

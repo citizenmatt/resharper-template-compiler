@@ -4,7 +4,7 @@ type: Live
 reformat: True
 shortenReferences: True
 categories: mnemonics
-scopes: InCSharpTypeMember(minimumLanguageVersion=2.0), InCSharpTypeAndNamespace(minimumLanguageVersion=2.0)
+scopes: InCSharpTypeMember(minimumLanguageVersion=2.0); InCSharpTypeAndNamespace(minimumLanguageVersion=2.0)
 parameterOrder: CLASSNAME
 CLASSNAME-expression: constant("MyClass")
 ---
