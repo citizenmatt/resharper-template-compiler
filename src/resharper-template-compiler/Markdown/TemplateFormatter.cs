@@ -48,7 +48,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
                     content = content + string.Format("({0})", parameters);
                 scopes.Add(content);
             }
-            writer.WriteLine("scopes: {0}", string.Join(", ", scopes));
+            writer.WriteLine("scopes: {0}", string.Join("; ", scopes));
         }
 
         private void FormatFields(Template template)
