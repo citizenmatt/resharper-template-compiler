@@ -108,7 +108,7 @@ To decompile, simply:
 
 To compile a set of markdown files into a `.dotSettings` file ready to be distributed:
 
-    rstc copmile -i *.md -o templates.dotSettings
+    rstc compile -i *.md -o templates.dotSettings
 
 * `-i` is for the input files and must be provided.
 * `-o` is the output file, and defaults to `templates.dotSettings` in the current directory if not specified.
