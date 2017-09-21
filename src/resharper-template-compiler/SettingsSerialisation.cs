@@ -1,9 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.Windows.Markup;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler
 {
@@ -62,13 +62,29 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         public static SettingsDeserialisation DeserialiseFromXaml(TextReader textReader)
         {
-            using(var xmlReader = XmlReader.Create(textReader))
+            XNamespace ns = "http://schemas.microsoft.com/winfx/2006/xaml";
+            var dictionary = new Dictionary<string, object>();
+            
+            var document = XDocument.Load(textReader);
+            var xElements = document.Root.Elements();
+            foreach (var xElement in xElements)
             {
-                var resourceDictionary = (ResourceDictionary)XamlReader.Load(xmlReader);
-                var dictionary = new Dictionary<string, object>();
-                foreach (var key in resourceDictionary.Keys)
-                    dictionary.Add((string) key, resourceDictionary[key]);
-                return new SettingsDeserialisation(dictionary);
+                var value = CoerceValue(xElement);
+                var key = xElement.Attribute(ns + "Key").Value;
+                dictionary.Add(key, value);
+            }
+
+            return new SettingsDeserialisation(dictionary);
+        }
+
+        private static object CoerceValue(XElement xElement)
+        {
+            switch (xElement.Name.LocalName)
+            {
+                case "String": return xElement.Value;
+                case "Boolean": return bool.Parse(xElement.Value);
+                case "Int64": return long.Parse(xElement.Value);
+                default: throw new InvalidOperationException($"Unknown element type: {xElement.Name.LocalName}");
             }
         }
     }
