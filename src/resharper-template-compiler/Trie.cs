@@ -17,8 +17,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var node = root;
             foreach (var segment in segments)
             {
-                Node next;
-                if (!node.Edges.TryGetValue(segment, out next))
+                if (!node.Edges.TryGetValue(segment, out var next))
                 {
                     next = new Node();
                     node.Edges.Add(segment, next);
@@ -33,8 +32,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var node = root;
             foreach (var segment in segments)
             {
-                Node next;
-                if (!node.Edges.TryGetValue(segment, out next))
+                if (!node.Edges.TryGetValue(segment, out var next))
                     return new List<string>();
                 node = next;
             }
@@ -45,7 +43,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         {
             var node = GetNode(segments);
             if (node == null)
-                throw new KeyNotFoundException(string.Format("The key <{0}> was not found", "/" + string.Join("/,", segments)));
+                throw new KeyNotFoundException($"The key <{"/" + string.Join("/,", segments)}> was not found");
             return node.Value;
         }
 
@@ -68,8 +66,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             foreach (var segment in segments)
             {
                 path = path + "/" + segment;
-                Node next;
-                if (!node.Edges.TryGetValue(segment, out next))
+                if (!node.Edges.TryGetValue(segment, out var next))
                     return null;
                 node = next;
             }

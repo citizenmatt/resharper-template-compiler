@@ -8,9 +8,10 @@ using CommandLine;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler
 {
-    class Program
+    public static class Program
     {
-        private static Regex InvalidFileCharsRegex = new Regex(string.Format("[{0}]", Regex.Escape(new string(Path.GetInvalidFileNameChars()))), RegexOptions.Compiled);
+        private static Regex InvalidFileCharsRegex = new Regex(
+            $"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()))}]", RegexOptions.Compiled);
 
         static int Main(string[] args)
         {
@@ -24,13 +25,16 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             if (result.Errors.Any())
                 return 1;
 
-            var compileOptions = result.Value as CompileOptions;
-            if (compileOptions != null)
-                DoCompile(compileOptions);
-
-            var decompileOptions = result.Value as DecompileOptions;
-            if (decompileOptions != null)
-                DoDecompile(decompileOptions);
+            switch (result.Value)
+            {
+                case CompileOptions compileOptions:
+                    DoCompile(compileOptions);
+                    break;
+                    
+                case DecompileOptions decompileOptions:
+                    DoDecompile(decompileOptions);
+                    break;
+            }
 
             return 0;
         }

@@ -42,10 +42,10 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             var scopes = new List<string>();
             foreach (var scope in template.Scopes)
             {
-                var content = string.Format("{0}", scope.Type);
-                var parameters = string.Join(", ", scope.Parameters.Select(p => string.Format("{0}={1}", p.Key, p.Value)));
+                var content = $"{scope.Type}";
+                var parameters = string.Join(", ", scope.Parameters.Select(p => $"{p.Key}={p.Value}"));
                 if (!string.IsNullOrEmpty(parameters))
-                    content = content + string.Format("({0})", parameters);
+                    content = content + $"({parameters})";
                 scopes.Add(content);
             }
             writer.WriteLine("scopes: {0}", string.Join("; ", scopes));
@@ -55,7 +55,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
         {
             if (!template.Fields.Any())
                 return;
-            var fields = template.Fields.Select(f => f.Editable ? f.Name : string.Format("({0})", f.Name));
+            var fields = template.Fields.Select(f => f.Editable ? f.Name : $"({f.Name})");
             writer.WriteLine("parameterOrder: {0}", string.Join(", ", fields));
             foreach (var field in template.Fields.Where(f => !string.IsNullOrEmpty(f.Expression)))
                 writer.WriteLine("{0}-expression: {1}", field.Name, field.Expression);

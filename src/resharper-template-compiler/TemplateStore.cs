@@ -13,10 +13,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             templates = new List<Template>();
         }
 
-        public IEnumerable<Template> Templates
-        {
-            get { return templates; }
-        }
+        public IEnumerable<Template> Templates => templates;
 
         public void AddTemplate(Template template)
         {

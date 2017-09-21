@@ -59,10 +59,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 
         private static bool GetBool(IDictionary<string, string> metadata, string key, bool @default)
         {
-            string value;
-            if (metadata.TryGetValue(key, out value))
-                return bool.Parse(value);
-            return @default;
+            return metadata.TryGetValue(key, out var value) ? bool.Parse(value) : @default;
         }
 
         private static Block SkipMetadata(Block document)
@@ -98,16 +95,12 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 
         private static IList<string> ParseCategories(IDictionary<string, string> metadata)
         {
-            string value;
-            if (metadata.TryGetValue("categories", out value))
-                return SplitAndTrim(value, ',');
-            return new string[0];
+            return metadata.TryGetValue("categories", out var value) ? SplitAndTrim(value, ',') : new string[0];
         }
 
         private static IList<Scope> ParseScopes(IDictionary<string, string> metadata)
         {
-            string value;
-            if (!metadata.TryGetValue("scopes", out value))
+            if (!metadata.TryGetValue("scopes", out var value))
                 return new Scope[0];
 
             return (from s in SplitAndTrim(value, ';')
@@ -137,13 +130,12 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
                 }
                 return s;
             }
-            throw new InvalidDataException(string.Format("Cannot parse scope: {0}", scope));
+            throw new InvalidDataException($"Cannot parse scope: {scope}");
         }
 
         private static IList<Field> ParseFields(IDictionary<string, string> metadata)
         {
-            string value;
-            if (!metadata.TryGetValue("parameterOrder", out value))
+            if (!metadata.TryGetValue("parameterOrder", out var value))
                 return new List<Field>();
 
             return (from f in SplitAndTrim(value, ',')
@@ -159,8 +151,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 
         private static string GetFieldExpression(string name, IDictionary<string, string> metadata)
         {
-            string expression;
-            metadata.TryGetValue(name + "-expression", out expression);
+            metadata.TryGetValue(name + "-expression", out var expression);
             return expression ?? string.Empty;
         }
 

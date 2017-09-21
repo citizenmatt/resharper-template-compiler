@@ -38,8 +38,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var index = GetIndexedValues<bool>(templatePath, "Applicability").First().Key;
             Enum.TryParse(index, out template.Type);
             template.Shortcut = GetValue<string>(templatePath, "Shortcut");
-            string description;
-            if (!TryGetValue(templatePath, "Description", out description))
+            if (!TryGetValue(templatePath, "Description", out string description))
                 Console.WriteLine("Warning: Template {0} does not have a description.", template.Shortcut);
             template.Description = description;
             template.Text = GetValue<string>(templatePath, "Text");
@@ -59,12 +58,10 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             foreach (var key in EnumerateKeys(fieldsPath))
             {
                 var fieldPath = MakePath(fieldsPath, SerialisationMetadata.FormatKey(key));
-                bool editable = true;
-                long initialRange;
-                if (TryGetValue(fieldPath, "InitialRange", out initialRange))
+                var editable = true;
+                if (TryGetValue(fieldPath, "InitialRange", out long initialRange))
                     editable = initialRange != -1;
-                string expression;
-                TryGetValue(fieldPath, "Expression", out expression);
+                TryGetValue(fieldPath, "Expression", out string expression);
                 var order = GetValue<long>(fieldPath, "Order");
                 var field = new Field
                 {
@@ -158,15 +155,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         private T TryGetValue<T>(IEnumerable<string> path, string name, T defaultValue)
         {
-            T value;
-            return TryGetValue(path, name, out value) ? value : defaultValue;
+            return TryGetValue(path, name, out T value) ? value : defaultValue;
         }
 
         private bool TryGetValue<T>(IEnumerable<string> path, string name, out T value)
         {
             value = default(T);
-            object o;
-            if (trie.TryGetValue(MakePath(path, name, SerialisationMetadata.EntryValue), out o))
+            if (trie.TryGetValue(MakePath(path, name, SerialisationMetadata.EntryValue), out var o))
             {
                 value = o == null ? default(T) : (T) Convert.ChangeType(o, typeof(T));
                 return true;

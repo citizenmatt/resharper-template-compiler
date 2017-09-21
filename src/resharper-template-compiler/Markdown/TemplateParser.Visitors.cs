@@ -58,6 +58,5 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
                 Content = Content + literalContent;
             }
         }
-
     }
 }
