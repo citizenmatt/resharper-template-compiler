@@ -41,9 +41,6 @@
     <Reference Include="CommonMark">
       <HintPath>..\packages\CommonMark.NET.0.4.1\lib\net45\CommonMark.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Experimental.Collections">
-      <HintPath>..\packages\Microsoft.Experimental.Collections.1.0.3-alpha\lib\portable-net45+win8+wp8\Microsoft.Experimental.Collections.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Markdown\TemplateFormatter.cs" />
+    <Compile Include="MultiValueDictionary.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="ReadmeFormatter.cs" />
     <Compile Include="SerialisationMetadata.cs" />
