@@ -23,22 +23,43 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             writer.WriteLine("type: {0}", template.Type);
             writer.WriteLine("reformat: {0}", template.Reformat);
             writer.WriteLine("shortenReferences: {0}", template.ShortenQualifiedReferences);
-            writer.WriteLine("categories: {0}", string.Join(", ", template.Categories));
+            if (template.Categories.Any())
+                writer.WriteLine("categories: {0}", string.Join(", ", template.Categories));
+            FormatCustomProperties(template);
             FormatScopes(template);
             FormatFields(template);
             writer.WriteLine("---");
             writer.WriteLine();
-            writer.WriteLine("# {0}", template.Shortcut);
-            writer.WriteLine();
-            writer.WriteLine(template.Description);
+            if (template.Type == TemplateType.File)
+            {
+                writer.WriteLine("# {0}", template.Description);
+            }
+            else
+            {
+                writer.WriteLine("# {0}", template.Shortcut);
+                writer.WriteLine();
+                writer.WriteLine(template.Description);
+            }
             writer.WriteLine();
             writer.WriteLine("```");
             writer.WriteLine(NoramliseRegex.Replace(template.Text, "\r\n"));
             writer.WriteLine("```");
         }
 
+        private void FormatCustomProperties(Template template)
+        {
+            if (!template.CustomProperties.Any())
+                return;
+
+            var properties = string.Join(", ", template.CustomProperties.Select(p => $"{p.Key}={p.Value}"));
+            writer.WriteLine("customProperties: {0}", properties);
+        }
+
         private void FormatScopes(Template template)
         {
+            if (!template.Scopes.Any())
+                return;
+            
             var scopes = new List<string>();
             foreach (var scope in template.Scopes)
             {

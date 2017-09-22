@@ -1,24 +1,27 @@
+using System;
 using System.Collections.Generic;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler
 {
     public class TemplateStore
     {
+        private readonly Dictionary<Guid, Template> templates = new Dictionary<Guid, Template>(); 
         private readonly SettingsStore liveTemplateSettings;
-        private readonly IList<Template> templates; 
 
         public TemplateStore(SettingsSerialisation settingsSerialisation)
         {
             liveTemplateSettings = settingsSerialisation.GetSettings("Default", "PatternsAndTemplates", "LiveTemplates");
-            templates = new List<Template>();
         }
 
-        public IEnumerable<Template> Templates => templates;
+        public IEnumerable<Template> Templates => templates.Values;
 
         public void AddTemplate(Template template)
         {
-            templates.Add(template);
-
+            if (templates.ContainsKey(template.Guid))
+                throw new InvalidOperationException($"Duplicate template {template.Guid}");
+            
+            templates.Add(template.Guid, template);
+            
             var templateSettings = liveTemplateSettings.AddIndexedSettings("Template", template.Guid);
             templateSettings.AddValue("Shortcut", template.Shortcut);
             templateSettings.AddValue("Description", template.Description);
@@ -26,9 +29,16 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             templateSettings.AddValue("Reformat", template.Reformat);
             templateSettings.AddValue("ShortenQualifiedReferences", template.ShortenQualifiedReferences);
             templateSettings.AddIndexedValue("Applicability", template.Type.ToString(), true);
+            AddCustomProperties(templateSettings, template.CustomProperties);
             AddCategories(templateSettings, template.Categories);
             AddScopes(templateSettings, template.Scopes);
             AddFields(templateSettings, template.Fields);
+        }
+
+        private static void AddCustomProperties(SettingsStore store, IDictionary<string, string> customProperties)
+        {
+            foreach (var property in customProperties)
+                store.AddIndexedValue("CustomProperties", property.Key, property.Value);
         }
 
         private static void AddCategories(SettingsStore templateSettings, IEnumerable<string> categories)

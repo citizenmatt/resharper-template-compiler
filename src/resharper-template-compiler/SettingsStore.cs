@@ -29,6 +29,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         public void AddValue(string name, object value)
         {
+            if (value == null)
+                return;
             var relativeValuePath = Combine(name, SerialisationMetadata.EntryValue);
             Add(relativeValuePath, value);
         }

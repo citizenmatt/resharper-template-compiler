@@ -37,7 +37,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var template = new Template {Guid = guid};
             var index = GetIndexedValues<bool>(templatePath, "Applicability").First().Key;
             Enum.TryParse(index, out template.Type);
-            template.Shortcut = GetValue<string>(templatePath, "Shortcut");
+            if (template.Type != TemplateType.File)
+                template.Shortcut = GetValue<string>(templatePath, "Shortcut");
             if (!TryGetValue(templatePath, "Description", out string description))
                 Console.WriteLine("Warning: Template {0} does not have a description.", template.Shortcut);
             template.Description = description;
@@ -45,6 +46,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             template.Reformat = TryGetValue(templatePath, "Reformat", true);
             template.ShortenQualifiedReferences = TryGetValue(templatePath, "ShortenQualifiedReferences", true);
             template.Scopes = DeserialiseScopes(templatePath);
+            template.CustomProperties = DeserialiseCustomProperties(templatePath);
             template.Categories = DeserialiseCategories(templatePath);
             template.Fields = DeserialiseFields(templatePath);
             return template;
@@ -73,6 +75,11 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             }
 
             return fields.OrderBy(f => f.Key).Select(f => f.Value).ToList();
+        }
+
+        private IDictionary<string, string> DeserialiseCustomProperties(IList<string> templatePath)
+        {
+            return GetIndexedValues<string>(templatePath, "CustomProperties");
         }
 
         private IList<string> DeserialiseCategories(IList<string> templatePath)

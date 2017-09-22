@@ -19,6 +19,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public string Text;
         public bool Reformat;
         public bool ShortenQualifiedReferences;
+        public IDictionary<string, string> CustomProperties = new Dictionary<string, string>();
         public IList<string> Categories = new List<string>();
         public IList<Scope> Scopes = new List<Scope>(); 
         public IList<Field> Fields = new List<Field>();

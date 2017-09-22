@@ -79,13 +79,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         private static object CoerceValue(XElement xElement)
         {
-            switch (xElement.Name.LocalName)
-            {
-                case "String": return xElement.Value;
-                case "Boolean": return bool.Parse(xElement.Value);
-                case "Int64": return long.Parse(xElement.Value);
-                default: throw new InvalidOperationException($"Unknown element type: {xElement.Name.LocalName}");
-            }
+            return Convert.ChangeType(xElement.Value, Type.GetType("System." + xElement.Name.LocalName));
         }
     }
 }

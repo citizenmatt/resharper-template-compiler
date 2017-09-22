@@ -15,18 +15,20 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             var document = ParseDocument(markdown);
             var metadata = ParseMetadata(document);
             var content = SkipMetadata(document);
-            var shortcut = ExtractShortcut(content);
-            var description = ExtractDescription(content);
+            var type = (TemplateType) Enum.Parse(typeof(TemplateType), metadata["type"], true);
+            var shortcut = ExtractShortcut(content, type);
+            var description = ExtractDescription(content, type);
             var text = ExtractText(content);
             return new Template
             {
                 Guid = new Guid(metadata["guid"]),
-                Type = (TemplateType) Enum.Parse(typeof(TemplateType), metadata["type"], true),
+                Type = type,
                 Shortcut = shortcut,
                 Description = description,
                 Text = text,
                 Reformat = GetBool(metadata, "reformat", true),
                 ShortenQualifiedReferences = GetBool(metadata, "shortenReferences", true),
+                CustomProperties = ParseCustomProperties(metadata),
                 Categories = ParseCategories(metadata),
                 Scopes = ParseScopes(metadata),
                 Fields = ParseFields(metadata)
@@ -72,18 +74,30 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             return block;
         }
 
-        private static string ExtractShortcut(Block block)
+        private static string ExtractShortcut(Block block, TemplateType type)
         {
+            if (type == TemplateType.File)
+                return null;
             var visitor = new ExtractFirstHeaderVisitor();
             visitor.Accept(block);
             return visitor.Header;
         }
 
-        private static string ExtractDescription(Block block)
+        private static string ExtractDescription(Block block, TemplateType type)
         {
-            var visitor = new ExtractFirstParagraphVisitor();
-            visitor.Accept(block);
-            return visitor.Paragraph;
+            // Files don't have shortcuts, so the file header is the description
+            if (type == TemplateType.File)
+            {
+                var visitor = new ExtractFirstHeaderVisitor();
+                visitor.Accept(block);
+                return visitor.Header;
+            }
+            else
+            {
+                var visitor = new ExtractFirstParagraphVisitor();
+                visitor.Accept(block);
+                return visitor.Paragraph;
+            }
         }
 
         private static string ExtractText(Block block)
@@ -91,6 +105,21 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             var visitor = new ExtractFirstCodeBlockVisitor();
             visitor.Accept(block);
             return visitor.CodeBlock;
+        }
+
+        private static IDictionary<string, string> ParseCustomProperties(IDictionary<string, string> metadata)
+        {
+            var properties = new Dictionary<string, string>();
+            if (metadata.TryGetValue("customProperties", out var value))
+            {
+                var values = SplitAndTrim(value, ',');
+                foreach (var kvp in values)
+                {
+                    var parts = SplitAndTrim(kvp, '=');
+                    properties[parts[0]] = parts[1];
+                }
+            }
+            return properties;
         }
 
         private static IList<string> ParseCategories(IDictionary<string, string> metadata)
