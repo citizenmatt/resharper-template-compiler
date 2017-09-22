@@ -45,7 +45,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var serialisation = new SettingsSerialisation(dictionary);
             var store = new TemplateStore(serialisation);
 
-            var inputFiles = ExpandWildcards(compileOptions.InputFiles);
+            var inputFiles = GetInputFiles(compileOptions.InputFiles);
 
             var parser = new TemplateParser();
             foreach (var inputFile in inputFiles)
@@ -73,9 +73,9 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             }
         }
 
-        private static IEnumerable<string> ExpandWildcards(IEnumerable<string> inputFiles)
+        private static IEnumerable<string> GetInputFiles(IEnumerable<string> inputFiles)
         {
-            return inputFiles.SelectMany(f => Directory.GetFiles(".", f));
+            return inputFiles.SelectMany(f => f.Split(';')).SelectMany(f => Directory.GetFiles(".", f));
         }
 
         private static void DoDecompile(DecompileOptions decompileOptions)
