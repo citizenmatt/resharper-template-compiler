@@ -21,11 +21,13 @@
 **/.idea/**/modules.xml
 **/.idea/**/contentModel.xml
 
+*.suo
 *.user
 [Bb]in/
 [Oo]bj/
 
 packages/
+*.nupkg
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)

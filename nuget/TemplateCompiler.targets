@@ -1,0 +1,27 @@
+<Project>
+  <PropertyGroup>
+    <TemplateCompilerToolsDir Condition="'$(TemplateCompilerToolsDir)' == ''">$(MSBuildThisFileDirectory)..\tools</TemplateCompilerToolsDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PrepareResourcesDependsOn>
+      $(PrepareResourcesDependsOn);
+      LiveTemplates_Compile
+    </PrepareResourcesDependsOn>
+    <CleanDependsOn>
+      $(CleanDependsOn);
+      LiveTemplates_Clean
+    </CleanDependsOn>
+  </PropertyGroup>
+
+  <Target Name="LiveTemplates_Compile"
+          Inputs="@(LiveTemplate)"
+          Outputs="%(LiveTemplate.OutputFile)">
+    <Exec Command="$(TemplateCompilerToolsDir)/rstc.exe compile -i %22@(LiveTemplate)%22 -o %(LiveTemplate.OutputFile)" />
+  </Target>
+
+  <Target Name="LiveTemplates_Clean">
+    <Delete Files="%(LiveTemplate.OutputFile)" TreatErrorsAsWarnings="true" />
+  </Target>
+</Project>
+

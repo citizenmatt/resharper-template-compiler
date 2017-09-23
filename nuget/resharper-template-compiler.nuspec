@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>CitizenMatt.ReSharper.LiveTemplateCompiler</id>
+    <version>2.0.0</version>
+    <title>ReSharper Live Template Compiler</title>
+    <authors>Matt Ellis</authors>
+    <owners>citizenmatt</owners>
+    <licenseUrl>https://github.com/citizenmatt/resharper-template-compiler/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/citizenmatt/resharper-template-compiler</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MSBuild tooling to convert markdown files into ReSharper Live Templates in a .DotSettings file</description>
+    <copyright>Copyright 2017 Matt Ellis</copyright>
+    <tags>resharper live-templates</tags>
+    <developmentDependency>true</developmentDependency>
+    <dependencies />
+  </metadata>
+  <files>
+    <file src="TemplateCompiler.targets" target="build/CitizenMatt.ReSharper.LiveTemplateCompiler.targets" />
+    <file src="..\src\resharper-template-compiler\bin\Release\rstc.exe" target="tools/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\rstc.exe.config" target="tools/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\CommandLine.dll" target="tools/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\CommonMark.dll" target="tools/" />
+  </files>
+</package>
