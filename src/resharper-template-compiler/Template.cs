@@ -23,6 +23,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public IList<string> Categories = new List<string>();
         public IList<Scope> Scopes = new List<Scope>(); 
         public IList<Field> Fields = new List<Field>();
+        public string InputFile;
     }
 
     public class Scope

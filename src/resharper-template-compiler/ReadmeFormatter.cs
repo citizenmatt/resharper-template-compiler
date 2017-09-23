@@ -26,12 +26,22 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             writer.WriteLine("# Templates");
             writer.WriteLine();
 
-            if (templatesByCategory.Count == 0)
-                FormatTemplates(templates.Templates);
+            if (templatesByCategory.Count > 0)
+            {
+                writer.WriteLine("Categorised:");
+                writer.WriteLine();
+                foreach (var category in templatesByCategory.Keys.OrderBy(c => c))
+                    writer.WriteLine("* [{0}](#{1})", category, category.Replace(' ', '_'));
+                writer.WriteLine();
+            }
 
+            writer.WriteLine("## All");
+            FormatTemplates(templates.Templates);
+            
             foreach (var category in templatesByCategory.Keys.OrderBy(s => s))
             {
-                writer.WriteLine("## {0}", category);
+                writer.WriteLine("<a name=\"{0}\"></a>", category.Replace(' ', '_'));
+                writer.WriteLine("## Category: {0}", category);
                 FormatTemplates(templatesByCategory[category]);
             }
         }
@@ -63,12 +73,12 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         private void FormatLiveTemplates(IEnumerable<Template> templates)
         {
             writer.WriteLine();
-            writer.WriteLine("## Live Templates");
+            writer.WriteLine("### Live Templates");
             writer.WriteLine();
             writer.WriteLine("Shortcut | Description");
             writer.WriteLine("---------|------------");
             foreach (var template in templates.OrderBy(t => t.Shortcut))
-                writer.WriteLine("[{0}]({0}.md) | {1}", template.Shortcut, template.Description);
+                writer.WriteLine("[{0}]({1}) | {2}", template.Shortcut, template.InputFile, template.Description);
 
             writer.WriteLine();
         }
@@ -81,12 +91,12 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         private void FormatFileTemplates(IEnumerable<Template> templates)
         {
             writer.WriteLine();
-            writer.WriteLine("## File Templates");
+            writer.WriteLine("### File Templates");
             writer.WriteLine();
             writer.WriteLine("Description |");
             writer.WriteLine("------------|");
             foreach (var template in templates.OrderBy(t => t.Description))
-                writer.WriteLine("[{0}]({0}.md) |", template.Description);
+                writer.WriteLine("[{0}]({1}) |", template.Description, template.InputFile);
             
             writer.WriteLine();
         }

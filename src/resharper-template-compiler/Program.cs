@@ -57,7 +57,9 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 }
 
                 var markdown = File.ReadAllText(inputFile);
-                store.AddTemplate(parser.Parse(markdown));
+                var template = parser.Parse(markdown);
+                template.InputFile = inputFile;
+                store.AddTemplate(template);
                 // TODO: Concatenate markdown to a readme.md
             }
 
