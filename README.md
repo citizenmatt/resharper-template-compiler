@@ -1,6 +1,6 @@
 # ReSharper Template Compiler
 
-A simple utility to create a ReSharper `.dotSettings` file for Live Template stored as structured markdown.
+A simple utility to create a ReSharper `.dotSettings` file for Live Template stored as structured markdown. It can run as a command line tool or as a NuGet package, integrated with your build. See below for usage details.
 
 ReSharper's templates are very powerul, generating complex code snippets from a simple text shortcut, with fields tied to macros for code completion and suggestion, GUID creation, file names and more. And they can even be packaged up as extensions and distributed in the [Extension Manager](http://resharper-plugins.jetbrains.com/packages?q=Tags%3A%22templates%22).
 
@@ -112,6 +112,44 @@ To compile a set of markdown files into a `.dotSettings` file ready to be distri
 
 * `-i` is for the input files and must be provided.
 * `-o` is the output file, and defaults to `templates.dotSettings` in the current directory if not specified.
+
+## NuGet package
+
+This utility is also available as a NuGet package, which will automatically compile a .dotSettings file from a set of markdown files as you build. It supports incremental build and will only update the output file if any of the input files have changed.
+
+Firstly, add a reference to the `CitizenMatt.ReSharper.LiveTemplateCompiler` package. Then add something like the following to your .csproj file:
+
+```xml
+<ItemGroup>
+  <LiveTemplate Include="templates\**\*.md">
+    <OutputFile>templates\templates.dotSettings</OutputFile>
+  </LiveTemplate>
+</ItemGroup>
+```
+
+Multiple .dotSettings files can be created, by giving the item group different `OutputFile` metadata:
+
+```xml
+<ItemGroup>
+  <LiveTemplate Include="templates\one\**\*.md">
+    <OutputFile>templates\one.dotSettings</OutputFile>
+  </LiveTemplate>
+  <LiveTemplate Include="templates\two\**\*.md">
+    <OutputFile>templates\two.dotSettings</OutputFile>
+  </LiveTemplate>
+</ItemGroup>
+```
+
+And the generated files can be included as embedded resources as normal:
+
+```xml
+<ItemGroup>
+  <LiveTemplate Include="templates\**\*.md">
+    <OutputFile>templates\templates.dotSettings</OutputFile>
+  </LiveTemplate>
+  <EmbeddedResource Include="templates\templates.dotSettings" />
+</ItemGroup>
+```
 
 ## Known Limitations
 
