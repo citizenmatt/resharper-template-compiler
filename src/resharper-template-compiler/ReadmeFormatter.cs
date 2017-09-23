@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -30,7 +31,6 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
             foreach (var category in templatesByCategory.Keys.OrderBy(s => s))
             {
-                // TODO: Perhaps split this down into template type - Live, Surround or File
                 writer.WriteLine("## {0}", category);
                 FormatTemplates(templatesByCategory[category]);
             }
@@ -38,12 +38,56 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         private void FormatTemplates(IEnumerable<Template> templates)
         {
+            foreach (var groupedTemplates in templates.GroupBy(t => t.Type))
+                FormatTemplates(groupedTemplates.Key, groupedTemplates);
+        }
+
+        private void FormatTemplates(TemplateType templateType, IEnumerable<Template> templates)
+        {
+            switch(templateType)
+            {
+                case TemplateType.Live:
+                    FormatLiveTemplates(templates);
+                    break;
+                case TemplateType.Surround:
+                    FormatSurroundTemplates(templates);
+                    break;
+                case TemplateType.File:
+                    FormatFileTemplates(templates);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(templateType), templateType, null);
+            }
+        }
+
+        private void FormatLiveTemplates(IEnumerable<Template> templates)
+        {
+            writer.WriteLine();
+            writer.WriteLine("## Live Templates");
             writer.WriteLine();
             writer.WriteLine("Shortcut | Description");
             writer.WriteLine("---------|------------");
             foreach (var template in templates.OrderBy(t => t.Shortcut))
                 writer.WriteLine("[{0}]({0}.md) | {1}", template.Shortcut, template.Description);
 
+            writer.WriteLine();
+        }
+
+        private void FormatSurroundTemplates(IEnumerable<Template> templates)
+        {
+            throw new NotImplementedException("Surround templates not supported in README generation");
+        }
+
+        private void FormatFileTemplates(IEnumerable<Template> templates)
+        {
+            writer.WriteLine();
+            writer.WriteLine("## File Templates");
+            writer.WriteLine();
+            writer.WriteLine("Description |");
+            writer.WriteLine("------------|");
+            foreach (var template in templates.OrderBy(t => t.Description))
+                writer.WriteLine("[{0}]({0}.md) |", template.Description);
+            
             writer.WriteLine();
         }
     }
