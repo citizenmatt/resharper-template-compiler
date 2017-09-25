@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler
 {
@@ -35,6 +36,16 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public Scope()
         {
             Guid = Guid.NewGuid();
+        }
+
+        public override string ToString()
+        {
+            if (Parameters.Count > 0)
+            {
+                var parameters = string.Join(", ", Parameters.Select(p => $"{p.Key}={p.Value}"));
+                return $"{Type}({parameters})";
+            }
+            return $"{Type}";
         }
     }
 

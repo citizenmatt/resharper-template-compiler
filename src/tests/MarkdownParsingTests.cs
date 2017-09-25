@@ -11,7 +11,7 @@ namespace tests
     public class MarkdownParsingTests
     {
         [Test]
-        public void Should_parse_simple_template()
+        public void Should_parse_simple_live_template()
         {
             const string markdown =
 @"---
@@ -48,6 +48,46 @@ xUnit.net [Theory]
             Assert.IsEmpty(template.Fields);
         }
 
+        [Test]
+        public void Should_parse_simple_file_template()
+        {
+            const string markdown =
+                @"---
+guid: 5ff5ac38-7207-4256-91ae-b5436552db13
+type: File
+reformat: True
+shortenReferences: True
+customProperties: Extension=cs, FileName=NewBehaviour, ValidateFileName=True
+scopes: InCSharpProject
+---
+
+# FileTemplate
+
+```
+public class Foo {}
+```
+";
+
+            var parser = new TemplateParser();
+            var template = parser.Parse(markdown);
+
+            DumpTree(markdown);
+
+            Assert.NotNull(template);
+            Assert.AreEqual(new Guid("{5ff5ac38-7207-4256-91ae-b5436552db13}"), template.Guid);
+            Assert.AreEqual(TemplateType.File, template.Type);
+            Assert.Null(template.Shortcut);
+            Assert.AreEqual("FileTemplate", template.Description);
+            Assert.AreEqual("public class Foo {}", template.Text);
+            Assert.AreEqual(true, template.Reformat);
+            Assert.AreEqual(true, template.ShortenQualifiedReferences);
+            Assert.IsEmpty(template.Categories);
+            Assert.AreEqual(1, template.Scopes.Count);
+            Assert.AreEqual("InCSharpProject", template.Scopes[0].Type);
+            Assert.AreEqual(0, template.Scopes[0].Parameters.Count);
+            Assert.IsEmpty(template.Fields);
+        }
+        
         [Test]
         public void Should_parse_single_category()
         {
