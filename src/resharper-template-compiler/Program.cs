@@ -30,7 +30,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 case CompileOptions compileOptions:
                     DoCompile(compileOptions);
                     break;
-                    
+
                 case DecompileOptions decompileOptions:
                     DoDecompile(decompileOptions);
                     break;

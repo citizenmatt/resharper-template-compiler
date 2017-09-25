@@ -146,10 +146,13 @@ And the generated files can be included as embedded resources as normal:
 <ItemGroup>
   <LiveTemplate Include="templates\**\*.md">
     <OutputFile>templates\templates.dotSettings</OutputFile>
+    <ReadmeFile>templates\README.md</ReadmeFile>
   </LiveTemplate>
   <EmbeddedResource Include="templates\templates.dotSettings" />
 </ItemGroup>
 ```
+
+If the `ReadmeFile` metadata isn't defined, the readme file is generated simply as `README.md`, and will appear in the current working directory (most likely next to the .csproj file).
 
 ## Known Limitations
 
