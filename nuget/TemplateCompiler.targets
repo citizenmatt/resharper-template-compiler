@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <TemplateCompilerToolsDir Condition="'$(TemplateCompilerToolsDir)' == ''">$(MSBuildThisFileDirectory)</TemplateCompilerToolsDir>
+    <TemplateCompilerToolsDir Condition="'$(TemplateCompilerToolsDir)' == ''">$(MSBuildThisFileDirectory)..\tools\</TemplateCompilerToolsDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +28,7 @@
       <LiveTemplateReadme>%(LiveTemplate.ReadmeFile)</LiveTemplateReadme>
       <LiveTemplateReadme Condition="'$(LiveTemplateReadme)' == ''">README.md</LiveTemplateReadme>
     </PropertyGroup>
-    <Exec Command="$(TemplateCompilerToolsDir)/rstc.exe compile -i %22@(LiveTemplate)%22 -o %(LiveTemplate.OutputFile) -r $(LiveTemplateReadme)" />
+    <Exec Command="$(TemplateCompilerToolsDir)rstc.exe compile -i %22@(LiveTemplate)%22 -o %(LiveTemplate.OutputFile) -r $(LiveTemplateReadme)" />
   </Target>
 
   <Target Name="LiveTemplates_Clean">

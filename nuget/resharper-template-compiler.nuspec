@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CitizenMatt.ReSharper.LiveTemplateCompiler</id>
-    <version>2.1.0</version>
+    <version>2.1.1</version>
     <title>ReSharper Live Template Compiler</title>
     <authors>Matt Ellis</authors>
     <owners>citizenmatt</owners>
@@ -10,6 +10,12 @@
     <projectUrl>https://github.com/citizenmatt/resharper-template-compiler</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MSBuild tooling to convert markdown files into ReSharper Live Templates in a .DotSettings file</description>
+    <releaseNotes>
+&#822; Fix path in targets file
+
+From 2.1.0:
+&#8226; Improve handling of readme generation location
+</releaseNotes>
     <copyright>Copyright 2017 Matt Ellis</copyright>
     <tags>resharper live-templates</tags>
     <developmentDependency>true</developmentDependency>
