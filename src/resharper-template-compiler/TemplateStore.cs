@@ -26,6 +26,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             templateSettings.AddValue("Shortcut", template.Shortcut);
             templateSettings.AddValue("Description", template.Description);
             templateSettings.AddValue("Text", template.Text);
+            templateSettings.AddValue("Image", template.Image);
             templateSettings.AddValue("Reformat", template.Reformat);
             templateSettings.AddValue("ShortenQualifiedReferences", template.ShortenQualifiedReferences);
             templateSettings.AddIndexedValue("Applicability", template.Type.ToString(), true);

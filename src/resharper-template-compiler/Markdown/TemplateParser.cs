@@ -26,6 +26,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
                 Shortcut = shortcut,
                 Description = description,
                 Text = text,
+                Image = GetString(metadata, "image", null),
                 Reformat = GetBool(metadata, "reformat", true),
                 ShortenQualifiedReferences = GetBool(metadata, "shortenReferences", true),
                 CustomProperties = ParseCustomProperties(metadata),
@@ -62,6 +63,11 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
         private static bool GetBool(IDictionary<string, string> metadata, string key, bool @default)
         {
             return metadata.TryGetValue(key, out var value) ? bool.Parse(value) : @default;
+        }
+
+        private static string GetString(IDictionary<string, string> metadata, string key, string @default)
+        {
+            return metadata.TryGetValue(key, out var value) ? value : @default;
         }
 
         private static Block SkipMetadata(Block document)

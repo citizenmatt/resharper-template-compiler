@@ -434,6 +434,36 @@ $var1$
             Assert.AreEqual("completeSmart()", template.Fields[2].Expression);
         }
 
+        [Test]
+        public void Should_parse_image()
+        {
+            const string markdown =
+@"---
+guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
+type: live
+reformat: true
+shortenReferences: true
+image: MyTemplateImage
+---
+
+# foo
+
+Foo attribute
+
+```cs
+[Foo]
+```
+";
+
+            var parser = new TemplateParser();
+            var template = parser.Parse(markdown);
+
+            DumpTree(markdown);
+
+            Assert.NotNull(template);
+            Assert.AreEqual("MyTemplateImage", template.Image);
+        }
+
         private static void DumpTree(string markdown)
         {
             using (var stringReader = new StringReader(markdown))

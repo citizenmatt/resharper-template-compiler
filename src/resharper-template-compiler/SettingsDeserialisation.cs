@@ -43,6 +43,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 Console.WriteLine("Warning: Template {0} does not have a description.", template.Shortcut);
             template.Description = description;
             template.Text = GetValue<string>(templatePath, "Text");
+            template.Image = TryGetValue(templatePath, "Image", (string) null);
             template.Reformat = TryGetValue(templatePath, "Reformat", true);
             template.ShortenQualifiedReferences = TryGetValue(templatePath, "ShortenQualifiedReferences", true);
             template.Scopes = DeserialiseScopes(templatePath);

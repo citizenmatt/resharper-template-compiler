@@ -212,6 +212,20 @@ namespace tests
             Assert.AreEqual("constant(\"false\")", templates[0].Fields[1].Expression);
         }
 
+        [Test]
+        public void Should_round_trip_image()
+        {
+            var template = GetBaseLiveTemplate();
+            template.Image = "MyTemplateImage";
+
+            var dictionary = Serialise(template);
+            var deserialiser = new SettingsDeserialisation(dictionary);
+            var templates = deserialiser.DeserialiseTemplates();
+            
+            Assert.AreEqual(1, templates.Count);
+            Assert.AreEqual("MyTemplateImage", templates[0].Image);
+        }
+
         private Template GetBaseLiveTemplate()
         {
             return new Template
