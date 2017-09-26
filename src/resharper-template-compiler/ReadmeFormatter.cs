@@ -8,10 +8,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
     public class ReadmeFormatter
     {
         private readonly TextWriter writer;
+        private readonly Uri baseUri;
 
-        public ReadmeFormatter(TextWriter writer)
+        public ReadmeFormatter(TextWriter writer, string basePath)
         {
             this.writer = writer;
+            if (!basePath.EndsWith(@"\")) basePath += @"\";
+            baseUri = new Uri(basePath);
         }
 
         public void FormatTemplates(TemplateStore templates)
@@ -78,7 +81,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             writer.WriteLine("Shortcut | Description");
             writer.WriteLine("---------|------------");
             foreach (var template in templates.OrderBy(t => t.Shortcut))
-                writer.WriteLine("[{0}]({1}) | {2}", template.Shortcut, template.InputFile, template.Description);
+                writer.WriteLine("[{0}]({1}) | {2}", template.Shortcut, GetRelativePath(template.InputFile), template.Description);
 
             writer.WriteLine();
         }
@@ -96,9 +99,16 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             writer.WriteLine("Description |");
             writer.WriteLine("------------|");
             foreach (var template in templates.OrderBy(t => t.Description))
-                writer.WriteLine("[{0}]({1}) |", template.Description, template.InputFile);
+                writer.WriteLine("[{0}]({1}) |", template.Description, GetRelativePath(template.InputFile));
             
             writer.WriteLine();
+        }
+
+        private string GetRelativePath(string fullPath)
+        {
+            var fullUri = new Uri(fullPath, UriKind.Absolute);
+            var relativeUri = baseUri.MakeRelativeUri(fullUri);
+            return relativeUri.ToString();
         }
     }
 }

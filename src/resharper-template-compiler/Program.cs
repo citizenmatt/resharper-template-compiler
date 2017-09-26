@@ -58,7 +58,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
                 var markdown = File.ReadAllText(inputFile);
                 var template = parser.Parse(markdown);
-                template.InputFile = inputFile;
+                template.InputFile = Path.Combine(Directory.GetCurrentDirectory(), inputFile);
                 store.AddTemplate(template);
                 // TODO: Concatenate markdown to a readme.md
             }
@@ -70,7 +70,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             stream = File.Open(compileOptions.ReadMeFile, FileMode.Create, FileAccess.Write);
             using (var streamWriter = new StreamWriter(stream))
             {
-                var readme = new ReadmeFormatter(streamWriter);
+                var readme = new ReadmeFormatter(streamWriter, Path.GetDirectoryName(Path.GetFullPath(compileOptions.ReadMeFile)));
                 readme.FormatTemplates(store);
             }
         }
