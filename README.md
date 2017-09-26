@@ -60,6 +60,7 @@ categories        | A comma separated list of categories, as displayed in the Te
 scopes            | A comma separated list of scopes, which state where the template is avaialble. See below for more details.
 parameterOrder    | A comma separated list of the parameters in the templates, and the order they are visited when the user hits tab. If the user is not intended to edit a particular parameter (perhaps it refers to another parameter), the name of the parameter should be placed in brackets, e.g. given `methodName, (varName), parameters`, the order of parameters is first `methodName`, then `parameters`. The `varName` parameter is not editable. Note that there is *no* validation between the number and order of parameters and the placeholders in the template text.
 *parameter*-expression | The expression used for the macro associated with a parameter. The name should be the parameter name followed by `-expression`. So for a parameter called `varName`, the expression would be `varName-expression: completeSmart()`. See below for more details.
+image             | Specify the icon to use. Unused in the UI, and requires custom code in a plugin to register a template image. A plugin must create a mapping between a template image name and an `IconId` instance. This can be done through a call to e.g. `new TemplateImage("MyTemplateImageName", MyIcons.MyTemplate.Id)`, which registers the map in a static dictionary. These calls can be created as part of initialisation of static fields in a `[ShellComponent]`.
 
 ### Scopes
 
