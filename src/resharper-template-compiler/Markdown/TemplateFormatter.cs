@@ -59,7 +59,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
         {
             if (!template.Scopes.Any())
                 return;
-            
+
             var scopes = new List<string>();
             foreach (var scope in template.Scopes)
             {
@@ -76,7 +76,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
         {
             if (!template.Fields.Any())
                 return;
-            var fields = template.Fields.Select(f => f.Editable ? f.Name : $"({f.Name})");
+            var fields = template.Fields.Select(f =>
+            {
+                // If editableInstance is set, it's more important than editable, which is easy to get wrong
+                if (f.EditableInstance > 0)
+                    return $"{f.Name}#{f.EditableInstance}";
+                return f.Editable ? f.Name : $"({f.Name})";
+            });
             writer.WriteLine("parameterOrder: {0}", string.Join(", ", fields));
             foreach (var field in template.Fields.Where(f => !string.IsNullOrEmpty(f.Expression)))
                 writer.WriteLine("{0}-expression: {1}", field.Name, field.Expression);

@@ -5,7 +5,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 {
     public class TemplateStore
     {
-        private readonly Dictionary<Guid, Template> templates = new Dictionary<Guid, Template>(); 
+        private readonly Dictionary<Guid, Template> templates = new Dictionary<Guid, Template>();
         private readonly SettingsStore liveTemplateSettings;
 
         public TemplateStore(SettingsSerialisation settingsSerialisation)
@@ -19,9 +19,9 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         {
             if (templates.ContainsKey(template.Guid))
                 throw new InvalidOperationException($"Duplicate template {template.Guid}");
-            
+
             templates.Add(template.Guid, template);
-            
+
             var templateSettings = liveTemplateSettings.AddIndexedSettings("Template", template.Guid);
             templateSettings.AddValue("Shortcut", template.Shortcut);
             templateSettings.AddValue("Description", template.Description);
@@ -68,8 +68,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 fieldSettings.AddValue("Order", order++);
                 if (!string.IsNullOrEmpty(field.Expression))
                     fieldSettings.AddValue("Expression", field.Expression);
-                if (!field.Editable)
-                    fieldSettings.AddValue("InitialRange", -1);
+
+                // I like the editable flag, as we use that most, but don't let it override editable instance
+                var initialRange = field.Editable ? 0 : -1;
+                if (field.EditableInstance > 0)
+                    initialRange = field.EditableInstance;
+                if (initialRange != 0)
+                    fieldSettings.AddValue("InitialRange", initialRange);
                 // TODO: File sections
             }
         }

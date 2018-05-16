@@ -144,7 +144,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 
         private static Scope ParseScope(string scope)
         {
-            var match = Regex.Match(scope, 
+            var match = Regex.Match(scope,
 @"^(?<type>\w+) (?<parameters>\(
 (?:
   (?: (?:(?<=\()\s*) | (?:,\s*) ) (?# Optional whitespace following an open bracket, or a comma with optional whitespace)
@@ -174,14 +174,28 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
                 return new List<Field>();
 
             return (from f in SplitAndTrim(value, ',')
-                let editable = !(f.Contains("(") && f.Contains(")"))
-                let name = f.Replace("(", string.Empty).Replace(")", string.Empty)
-                select new Field
-                {
-                    Name = name,
-                    Editable = editable,
-                    Expression = GetFieldExpression(name, metadata)
-                }).ToList();
+                select ParseField(f, metadata)).ToList();
+        }
+
+        private static Field ParseField(string field, IDictionary<string, string> metadata)
+        {
+            var editable = !(field.StartsWith("(") && field.EndsWith(")"));
+            var name = field.Replace("(", string.Empty).Replace(")", string.Empty);
+            var editableInstance = -1;
+            var i = field.IndexOf("#", StringComparison.OrdinalIgnoreCase);
+            if (editable && i != -1)
+            {
+                editableInstance = int.Parse(name.Substring(i + 1));
+                name = name.Substring(0, i);
+            }
+
+            return new Field
+            {
+                Name = name,
+                Editable = editable,
+                EditableInstance = editableInstance,
+                Expression = GetFieldExpression(name, metadata)
+            };
         }
 
         private static string GetFieldExpression(string name, IDictionary<string, string> metadata)

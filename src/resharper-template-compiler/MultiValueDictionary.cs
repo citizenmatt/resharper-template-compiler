@@ -6,7 +6,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
     public class MultiValueDictionary<TKey,TValue>
     {
         private readonly Dictionary<TKey, HashSet<TValue>> store = new Dictionary<TKey, HashSet<TValue>>();
-        
+
         public void Add(TKey key, TValue value)
         {
             if (!store.TryGetValue(key, out var values))

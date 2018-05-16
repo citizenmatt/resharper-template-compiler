@@ -177,7 +177,7 @@ namespace tests
 
             Assert.AreEqual(1, templates[0].Fields.Count);
             Assert.AreEqual("var1", templates[0].Fields[0].Name);
-            Assert.AreEqual(true, templates[0].Fields[0].Editable);
+            Assert.IsTrue(templates[0].Fields[0].Editable);
             Assert.AreEqual("constant(\"true\")", templates[0].Fields[0].Expression);
         }
 
@@ -195,7 +195,8 @@ namespace tests
             {
                 Name = "var2",
                 Editable = false,
-                Expression = "constant(\"false\")"
+                Expression = "constant(\"false\")",
+                EditableInstance = 2
             });
 
             var dictionary = Serialise(template);
@@ -204,12 +205,13 @@ namespace tests
 
             Assert.AreEqual(2, templates[0].Fields.Count);
             Assert.AreEqual("var1", templates[0].Fields[0].Name);
-            Assert.AreEqual(true, templates[0].Fields[0].Editable);
+            Assert.IsTrue(templates[0].Fields[0].Editable);
             Assert.AreEqual("constant(\"true\")", templates[0].Fields[0].Expression);
 
             Assert.AreEqual("var2", templates[0].Fields[1].Name);
-            Assert.AreEqual(false, templates[0].Fields[1].Editable);
+            Assert.IsTrue(templates[0].Fields[1].Editable);
             Assert.AreEqual("constant(\"false\")", templates[0].Fields[1].Expression);
+            Assert.AreEqual(2, templates[0].Fields[1].EditableInstance);
         }
 
         [Test]
@@ -221,7 +223,7 @@ namespace tests
             var dictionary = Serialise(template);
             var deserialiser = new SettingsDeserialisation(dictionary);
             var templates = deserialiser.DeserialiseTemplates();
-            
+
             Assert.AreEqual(1, templates.Count);
             Assert.AreEqual("MyTemplateImage", templates[0].Image);
         }

@@ -64,7 +64,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         {
             XNamespace ns = "http://schemas.microsoft.com/winfx/2006/xaml";
             var dictionary = new Dictionary<string, object>();
-            
+
             var document = XDocument.Load(textReader);
             var xElements = document.Root.Elements();
             foreach (var xElement in xElements)

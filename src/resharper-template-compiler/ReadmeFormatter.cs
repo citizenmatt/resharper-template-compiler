@@ -40,7 +40,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
             writer.WriteLine("## All");
             FormatTemplates(templates.Templates);
-            
+
             foreach (var category in templatesByCategory.Keys.OrderBy(s => s))
             {
                 writer.WriteLine("<a name=\"{0}\"></a>", category.Replace(' ', '_'));
@@ -100,7 +100,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             writer.WriteLine("------------|");
             foreach (var template in templates.OrderBy(t => t.Description))
                 writer.WriteLine("[{0}]({1}) |", template.Description, GetRelativePath(template.InputFile));
-            
+
             writer.WriteLine();
         }
 

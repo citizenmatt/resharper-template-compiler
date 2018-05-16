@@ -23,7 +23,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public bool ShortenQualifiedReferences;
         public IDictionary<string, string> CustomProperties = new Dictionary<string, string>();
         public IList<string> Categories = new List<string>();
-        public IList<Scope> Scopes = new List<Scope>(); 
+        public IList<Scope> Scopes = new List<Scope>();
         public IList<Field> Fields = new List<Field>();
         public string InputFile;
     }
@@ -55,5 +55,6 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public string Name;
         public bool Editable = true;
         public string Expression;
+        public int EditableInstance;    // 1-based index
     }
 }
