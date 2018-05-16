@@ -71,7 +71,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                     Name = key,
                     Editable = editable,
                     Expression = expression,
-                    EditableInstance = (int) initialRange
+                    EditableInstance = initialRange
                 };
                 fields.Add(order, field);
             }

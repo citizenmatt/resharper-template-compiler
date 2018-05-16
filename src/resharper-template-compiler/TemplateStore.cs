@@ -70,7 +70,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                     fieldSettings.AddValue("Expression", field.Expression);
 
                 // I like the editable flag, as we use that most, but don't let it override editable instance
-                var initialRange = field.Editable ? 0 : -1;
+                long initialRange = field.Editable ? 0 : -1;
                 if (field.EditableInstance > 0)
                     initialRange = field.EditableInstance;
                 if (initialRange != 0)

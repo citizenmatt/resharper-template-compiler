@@ -181,7 +181,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
         {
             var editable = !(field.StartsWith("(") && field.EndsWith(")"));
             var name = field.Replace("(", string.Empty).Replace(")", string.Empty);
-            var editableInstance = -1;
+            long editableInstance = -1;
             var i = field.IndexOf("#", StringComparison.OrdinalIgnoreCase);
             if (editable && i != -1)
             {

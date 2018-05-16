@@ -55,6 +55,6 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public string Name;
         public bool Editable = true;
         public string Expression;
-        public int EditableInstance;    // 1-based index
+        public long EditableInstance;    // 0-based index
     }
 }
