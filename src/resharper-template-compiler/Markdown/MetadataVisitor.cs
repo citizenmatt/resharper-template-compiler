@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using CommonMark.Syntax;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
@@ -41,6 +42,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 
             protected override void VisitString(string literalContent)
             {
+                if (!literalContent.Contains(":"))
+                    throw new InvalidDataException($"Expected ':' in YAML front matter. Got '{literalContent}'");
                 var x = literalContent.Split(':');
                 var key = x[0].Trim();
                 var value = x[1].Trim();
