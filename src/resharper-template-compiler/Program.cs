@@ -21,8 +21,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 settings.CaseSensitive = false;
                 settings.HelpWriter = Console.Error;
             });
-            var result = parser.ParseArguments<CompileOptions, DecompileOptions>(args);
-            if (result.Errors.Any())
+            var result = parser.ParseArguments<CompileOptions, DecompileOptions>(args) as Parsed<object>;
+            if (result == null)
                 return 1;
 
             switch (result.Value)
