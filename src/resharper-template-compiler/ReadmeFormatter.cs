@@ -13,7 +13,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public ReadmeFormatter(TextWriter writer, string basePath)
         {
             this.writer = writer;
-            if (!basePath.EndsWith(@"\")) basePath += @"\";
+            basePath = basePath.Replace('\\', '/');
+            if (!basePath.EndsWith(@"/")) basePath += @"/";
             baseUri = new Uri(basePath);
         }
 
@@ -106,7 +107,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         private string GetRelativePath(string fullPath)
         {
-            var fullUri = new Uri(fullPath, UriKind.Absolute);
+            var fullUri = new Uri(fullPath.Replace('\\', '/'), UriKind.Absolute);
             var relativeUri = baseUri.MakeRelativeUri(fullUri);
             return relativeUri.ToString();
         }
