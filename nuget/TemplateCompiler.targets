@@ -12,8 +12,8 @@
 
   <PropertyGroup>
     <PrepareResourcesDependsOn>
-      $(PrepareResourcesDependsOn);
-      LiveTemplates_Compile
+      LiveTemplates_Compile;
+      $(PrepareResourcesDependsOn)
     </PrepareResourcesDependsOn>
     <CleanDependsOn>
       $(CleanDependsOn);
