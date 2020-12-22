@@ -50,6 +50,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             template.CustomProperties = DeserialiseCustomProperties(templatePath);
             template.Categories = DeserialiseCategories(templatePath);
             template.Fields = DeserialiseFields(templatePath);
+            template.UITag = TryGetValue(templatePath, "UITag", (string) null);
             return template;
         }
 

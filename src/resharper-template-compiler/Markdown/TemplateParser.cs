@@ -32,7 +32,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
                 CustomProperties = ParseCustomProperties(metadata),
                 Categories = ParseCategories(metadata),
                 Scopes = ParseScopes(metadata),
-                Fields = ParseFields(metadata)
+                Fields = ParseFields(metadata),
+                UITag = GetString(metadata, "UITag", null)
             };
         }
 

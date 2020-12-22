@@ -25,6 +25,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public IList<string> Categories = new List<string>();
         public IList<Scope> Scopes = new List<Scope>();
         public IList<Field> Fields = new List<Field>();
+        public string UITag;    // Name used to group templates in Rider's UI
         public string InputFile;
     }
 

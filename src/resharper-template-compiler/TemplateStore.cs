@@ -34,6 +34,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             AddCategories(templateSettings, template.Categories);
             AddScopes(templateSettings, template.Scopes);
             AddFields(templateSettings, template.Fields);
+            templateSettings.AddValue("UITag", template.UITag);
         }
 
         private static void AddCustomProperties(SettingsStore store, IDictionary<string, string> customProperties)

@@ -47,6 +47,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 xmlWriter.WriteAttributeString("xml", "space", null, "preserve");
                 xmlWriter.WriteAttributeString("xmlns", "x", null, "http://schemas.microsoft.com/winfx/2006/xaml");
                 xmlWriter.WriteAttributeString("xmlns", "s", null, "clr-namespace:System;assembly=mscorlib");
+                // ReSharper disable once StringLiteralTypo - the typo in "schemas" is correct
                 xmlWriter.WriteAttributeString("xmlns", "ss", null, "urn:shemas-jetbrains-com:settings-storage-xaml");
                 foreach (var entry in serialisation.dictionary.OrderBy(p => p.Key).Where(p => p.Value != null))
                 {
