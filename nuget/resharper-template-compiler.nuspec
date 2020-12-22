@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CitizenMatt.ReSharper.LiveTemplateCompiler</id>
-    <version>2.6.0</version>
+    <version>2.7.0</version>
     <title>ReSharper Live Template Compiler</title>
     <authors>Matt Ellis</authors>
     <owners>citizenmatt</owners>
@@ -11,6 +11,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MSBuild tooling to convert markdown files into ReSharper Live Templates in a .DotSettings file</description>
     <releaseNotes>
+&#822; Add support for UITag grouping in File Templates
+
+From 2.6.0:
 &#822; Fix order of targets. Compilation now occurs before other PrepareResources target dependencies
 
 From 2.5.1:
