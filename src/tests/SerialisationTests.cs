@@ -55,11 +55,7 @@ namespace tests
         public void Should_round_trip_single_scope()
         {
             var template = GetBaseLiveTemplate();
-            template.Scopes.Add(new Scope
-            {
-                Guid = Guid.NewGuid(),
-                Type = "InCSharpStatement"
-            });
+            template.Scopes.Add(new Scope("InCSharpStatement", Guid.NewGuid()));
 
             var dictionary = Serialise(template);
             var deserialiser = new SettingsDeserialisation(dictionary);
@@ -75,11 +71,9 @@ namespace tests
         public void Should_round_trip_single_scope_with_parameters()
         {
             var template = GetBaseLiveTemplate();
-            template.Scopes.Add(new Scope
+            template.Scopes.Add(new Scope("InCSharpStatement", Guid.NewGuid())
             {
-                Guid = Guid.NewGuid(),
-                Type = "InCSharpStatement",
-                Parameters = new Dictionary<string, string>()
+                Parameters = new Dictionary<string, string>
                 {
                     {"minimumLanguageVersion", "2.0"},
                     {"foo", "bar"}
@@ -101,21 +95,17 @@ namespace tests
         public void Should_round_trip_multiple_scopes()
         {
             var template = GetBaseLiveTemplate();
-            template.Scopes.Add(new Scope
+            template.Scopes.Add(new Scope("InCSharpStatement", Guid.NewGuid())
             {
-                Guid = Guid.NewGuid(),
-                Type = "InCSharpStatement",
-                Parameters = new Dictionary<string, string>()
+                Parameters = new Dictionary<string, string>
                 {
                     {"minimumLanguageVersion", "2.0"},
                     {"foo", "bar"}
                 }
             });
-            template.Scopes.Add(new Scope
+            template.Scopes.Add(new Scope("InJSStatement", Guid.NewGuid())
             {
-                Guid = Guid.NewGuid(),
-                Type = "InJSStatement",
-                Parameters = new Dictionary<string, string>()
+                Parameters = new Dictionary<string, string>
                 {
                     {"minimumLanguageVersion", "2.0"},
                     {"foo", "bar"}
@@ -244,21 +234,14 @@ namespace tests
 
         private Template GetBaseFileTemplate()
         {
-            return new Template()
+            return new Template
             {
                 Guid = new Guid("504C64D1-352C-4841-B1F1-DCE0829A63BD"),
                 Type = TemplateType.File,
                 Description = "description",
                 Text = "text",
                 Reformat = true,
-                Scopes = new List<Scope>
-                {
-                    new Scope
-                    {
-                        Guid = Guid.NewGuid(),
-                        Type = "InCSharpProject"
-                    }
-                },
+                Scopes = new List<Scope> { new Scope("InCSharpProject", Guid.NewGuid()) },
                 ShortenQualifiedReferences = true
             };
         }

@@ -108,10 +108,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         {
             var scopePath = MakePath(templatePath, "Scope",
                 SerialisationMetadata.FormatKey(SerialisationMetadata.FormatGuid(guid)));
-            var scope = new Scope
+            var scope = new Scope(GetValue<string>(scopePath, "Type"), guid)
             {
-                Guid = guid,
-                Type = GetValue<string>(scopePath, "Type"),
                 Parameters = DeserialiseScopeParameters(scopePath)
             };
             return scope;

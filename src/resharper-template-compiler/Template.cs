@@ -35,9 +35,10 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public string Type;
         public IDictionary<string, string> Parameters = new Dictionary<string, string>();
 
-        public Scope()
+        public Scope(string type, Guid guid)
         {
-            Guid = Guid.NewGuid();
+            Type = type;
+            Guid = guid;
         }
 
         public override string ToString()

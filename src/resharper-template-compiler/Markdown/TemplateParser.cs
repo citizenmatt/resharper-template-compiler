@@ -139,11 +139,23 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             if (!metadata.TryGetValue("scopes", out var value))
                 return new Scope[0];
 
-            return (from s in SplitAndTrim(value, ';')
-                select ParseScope(s)).ToList();
+            var names = SplitAndTrim(value, ';').ToList();
+
+            // Create the GUIDs for the scopes. It is important to try to keep the scopes in the same order as they are
+            // defined in the template.md file - the grouping and ordering of the templates are based on the name of the
+            // first scope point that the template declares (see RIDER-10132). I don't believe the settings subsystem
+            // has any guarantees on ordering, but it works for now.
+            // The downside is that we can't also have deterministic GUIDs, so we will always get churn on the GUID key
+            // with every run.
+            var guids = (from _ in names
+                let g = Guid.NewGuid()
+                orderby SerialisationMetadata.FormatGuid(g)
+                select g).ToList();
+
+            return names.Select((t, i) => ParseScope(t, guids[i])).ToList();
         }
 
-        private static Scope ParseScope(string scope)
+        private static Scope ParseScope(string scope, Guid guid)
         {
             var match = Regex.Match(scope,
 @"^(?<type>\w+) (?<parameters>\(
@@ -155,10 +167,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 
             if (match.Success)
             {
-                var s = new Scope
-                {
-                    Type = match.Groups["type"].Value
-                };
+                var s = new Scope(match.Groups["type"].Value, guid);
                 if (match.Groups["parameters"].Success)
                 {
                     for (var i = 0; i < match.Groups["key"].Captures.Count; i++)
