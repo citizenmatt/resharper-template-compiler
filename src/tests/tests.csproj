@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net48;netcoreapp31</TargetFrameworks>
     <IsPackable>false</IsPackable>
-    <Copyright>Copyright © Matt Ellis 2020</Copyright>
+    <Copyright>Copyright © Matt Ellis 2021</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.24.0" />

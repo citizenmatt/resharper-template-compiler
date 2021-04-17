@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CitizenMatt.ReSharper.LiveTemplateCompiler</id>
-    <version>2.8.0</version>
+    <version>3.0.0</version>
     <title>ReSharper Live Template Compiler</title>
     <authors>Matt Ellis</authors>
     <owners>citizenmatt</owners>
@@ -11,6 +11,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MSBuild tooling to convert markdown files into ReSharper Live Templates in a .DotSettings file</description>
     <releaseNotes>
+&#822; Update to MarkDig
+&#822; YAML front matter is no longer parsed as Markdown, so can contain characters used in Markdown
+
+From 2.8.0:
 &#822; Maintain order of template scopes in generated settings file
 
 From 2.7.0:
