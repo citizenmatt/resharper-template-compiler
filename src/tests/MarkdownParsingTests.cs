@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using CitizenMatt.ReSharper.TemplateCompiler;
 using CitizenMatt.ReSharper.TemplateCompiler.Markdown;
-using CommonMark;
 using NUnit.Framework;
 
 namespace tests
@@ -32,8 +30,6 @@ xUnit.net [Theory]
 
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
-
-            DumpTree(markdown);
 
             Assert.NotNull(template);
             Assert.AreEqual(new Guid("{04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}"), template.Guid);
@@ -71,8 +67,6 @@ public class Foo {}
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
 
-            DumpTree(markdown);
-
             Assert.NotNull(template);
             Assert.AreEqual(new Guid("{5ff5ac38-7207-4256-91ae-b5436552db13}"), template.Guid);
             Assert.AreEqual(TemplateType.File, template.Type);
@@ -87,7 +81,7 @@ public class Foo {}
             Assert.AreEqual(0, template.Scopes[0].Parameters.Count);
             Assert.IsEmpty(template.Fields);
         }
-        
+
         [Test]
         public void Should_parse_single_category()
         {
@@ -111,8 +105,6 @@ xUnit.net [Theory]
 
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
-
-            DumpTree(markdown);
 
             Assert.NotNull(template);
             CollectionAssert.AreEqual(new[] { "xunit" }, template.Categories);
@@ -142,8 +134,6 @@ xUnit.net [Theory]
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
 
-            DumpTree(markdown);
-
             Assert.NotNull(template);
             CollectionAssert.AreEqual(new[] { "xunit", "xunit-attributes" }, template.Categories);
         }
@@ -171,8 +161,6 @@ xUnit.net [Theory]
 
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
-
-            DumpTree(markdown);
 
             Assert.NotNull(template);
             Assert.AreEqual(1, template.Scopes.Count);
@@ -204,8 +192,6 @@ xUnit.net [Theory]
 
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
-
-            DumpTree(markdown);
 
             Assert.NotNull(template);
             Assert.AreEqual(2, template.Scopes.Count);
@@ -239,8 +225,6 @@ xUnit.net [Theory]
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
 
-            DumpTree(markdown);
-
             Assert.NotNull(template);
             Assert.AreEqual(1, template.Scopes.Count);
             Assert.AreEqual("InCSharpStatement", template.Scopes[0].Type);
@@ -273,8 +257,6 @@ xUnit.net [Theory]
 
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
-
-            DumpTree(markdown);
 
             Assert.NotNull(template);
             Assert.AreEqual(1, template.Scopes.Count);
@@ -311,8 +293,6 @@ $var1$
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
 
-            DumpTree(markdown);
-
             Assert.NotNull(template);
             Assert.AreEqual(1, template.Fields.Count);
             Assert.AreEqual("var1", template.Fields[0].Name);
@@ -345,13 +325,43 @@ $var1$
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
 
-            DumpTree(markdown);
-
             Assert.NotNull(template);
             Assert.AreEqual(1, template.Fields.Count);
             Assert.AreEqual("var1", template.Fields[0].Name);
             Assert.IsTrue(template.Fields[0].Editable);
             Assert.AreEqual("completeSmart()", template.Fields[0].Expression);
+        }
+
+        [Test]
+        public void Should_parse_expression_containing_markdown_syntax()
+        {
+            const string markdown =
+@"---
+guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
+type: Live
+reformat: true
+shortenReferences: true
+parameterOrder: var1
+var1-expression: content(""5 * * * * *"")
+---
+
+# tda
+
+xUnit.net [Theory]
+
+```cs
+$var1$
+```
+";
+
+            var parser = new TemplateParser();
+            var template = parser.Parse(markdown);
+
+            Assert.NotNull(template);
+            Assert.AreEqual(1, template.Fields.Count);
+            Assert.AreEqual("var1", template.Fields[0].Name);
+            Assert.IsTrue(template.Fields[0].Editable);
+            Assert.AreEqual("content(\"5 * * * * *\")", template.Fields[0].Expression);
         }
 
         [Test]
@@ -379,8 +389,6 @@ $var1$
 
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
-
-            DumpTree(markdown);
 
             Assert.NotNull(template);
             Assert.AreEqual(2, template.Fields.Count);
@@ -419,8 +427,6 @@ $var1$
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
 
-            DumpTree(markdown);
-
             Assert.NotNull(template);
             Assert.AreEqual(3, template.Fields.Count);
             Assert.AreEqual("var1", template.Fields[0].Name);
@@ -458,27 +464,8 @@ Foo attribute
             var parser = new TemplateParser();
             var template = parser.Parse(markdown);
 
-            DumpTree(markdown);
-
             Assert.NotNull(template);
             Assert.AreEqual("MyTemplateImage", template.Image);
-        }
-
-        private static void DumpTree(string markdown)
-        {
-            using (var stringReader = new StringReader(markdown))
-            {
-                var document = CommonMarkConverter.ProcessStage1(stringReader);
-                CommonMarkConverter.ProcessStage2(document);
-
-                CommonMarkConverter.ProcessStage3(document, Console.Out, new CommonMarkSettings
-                {
-                    OutputFormat = OutputFormat.SyntaxTree
-                });
-            }
-
-            Console.WriteLine();
-            Console.WriteLine();
         }
     }
 }

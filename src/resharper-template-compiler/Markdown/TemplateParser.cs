@@ -2,23 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
-using CommonMark;
-using CommonMark.Syntax;
+using Markdig;
+using Markdig.Extensions.Yaml;
+using Markdig.Helpers;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
 {
-    public partial class TemplateParser
+    public class TemplateParser
     {
         public Template Parse(string markdown)
         {
             var document = ParseDocument(markdown);
             var metadata = ParseMetadata(document);
-            var content = SkipMetadata(document);
             var type = (TemplateType) Enum.Parse(typeof(TemplateType), metadata["type"], true);
-            var shortcut = ExtractShortcut(content, type);
-            var description = ExtractDescription(content, type);
-            var text = ExtractText(content);
+            var shortcut = ExtractShortcut(document, type);
+            var description = ExtractDescription(document, type);
+            var text = ExtractText(document);
             return new Template
             {
                 Guid = new Guid(metadata["guid"]),
@@ -37,25 +40,25 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             };
         }
 
-        private static Block ParseDocument(string text)
+        private static MarkdownDocument ParseDocument(string text)
         {
-            using(var stringReader = new StringReader(text))
-            {
-                // This is a truly awful API
-                var document = CommonMarkConverter.ProcessStage1(stringReader);
-                CommonMarkConverter.ProcessStage2(document);
-                return document;
-            }
+            var pipeline = new MarkdownPipelineBuilder().UseYamlFrontMatter().Build();
+            var document = Markdig.Markdown.Parse(text, pipeline);
+            return document;
         }
 
-        private static IDictionary<string, string> ParseMetadata(Block document)
+        private static IDictionary<string, string> ParseMetadata(MarkdownDocument document)
         {
             var dictionary = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-
-            if (document.FirstChild.Tag == BlockTag.HorizontalRuler)
+            var frontMatter = document.Descendants<YamlFrontMatterBlock>().First();
+            foreach (StringLine line in frontMatter.Lines)
             {
-                var visitor = new MetadataVisitor(dictionary);
-                visitor.Accept(document);
+                var text = line.ToString();
+                var colon = text.IndexOf(":", StringComparison.Ordinal);
+                if (colon == -1) continue;
+                var key = text.Substring(0, colon).Trim();
+                var value = text.Substring(colon + 1, text.Length - (colon + 1)).Trim();
+                dictionary.Add(key, value);
             }
 
             return dictionary;
@@ -71,47 +74,44 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             return metadata.TryGetValue(key, out var value) ? value : @default;
         }
 
-        private static Block SkipMetadata(Block document)
+        private static string ExtractLiteral(ContainerInline inline)
         {
-            if (document.FirstChild.Tag != BlockTag.HorizontalRuler)
-                return document;
-            var block = document.FirstChild.NextSibling;
-            while (block != null && block.Tag != BlockTag.HorizontalRuler)
-                block = block.NextSibling;
-            return block;
+            return string.Join("", inline.Descendants<LiteralInline>().Select(i => i.ToString()));
         }
 
-        private static string ExtractShortcut(Block block, TemplateType type)
+        private static string ExtractShortcut(MarkdownDocument document, TemplateType type)
         {
             if (type == TemplateType.File)
                 return null;
-            var visitor = new ExtractFirstHeaderVisitor();
-            visitor.Accept(block);
-            return visitor.Header;
+
+            var headingBlock = document.Descendants<HeadingBlock>().First();
+            return ExtractLiteral(headingBlock.Inline);
         }
 
-        private static string ExtractDescription(Block block, TemplateType type)
+        private static string ExtractDescription(MarkdownDocument document, TemplateType type)
         {
             // Files don't have shortcuts, so the file header is the description
             if (type == TemplateType.File)
             {
-                var visitor = new ExtractFirstHeaderVisitor();
-                visitor.Accept(block);
-                return visitor.Header;
+                var headingBlock = document.Descendants<HeadingBlock>().First();
+                return ExtractLiteral(headingBlock.Inline);
             }
             else
             {
-                var visitor = new ExtractFirstParagraphVisitor();
-                visitor.Accept(block);
-                return visitor.Paragraph;
+                var paragraphBlock = document.Descendants<ParagraphBlock>().First();
+                return ExtractLiteral(paragraphBlock.Inline);
             }
         }
 
-        private static string ExtractText(Block block)
+        private static string ExtractText(MarkdownDocument document)
         {
-            var visitor = new ExtractFirstCodeBlockVisitor();
-            visitor.Accept(block);
-            return visitor.CodeBlock;
+            var codeBlock = document.Descendants<FencedCodeBlock>().First();
+            var content = new StringBuilder();
+            foreach (StringLine line in codeBlock.Lines)
+                content.AppendLine(line.ToString());
+
+            // Trim any trailing linefeeds
+            return content.ToString().Trim();
         }
 
         private static IDictionary<string, string> ParseCustomProperties(IDictionary<string, string> metadata)
