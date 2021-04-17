@@ -56,11 +56,11 @@ From 2.1.0:
     <file src="..\src\resharper-template-compiler\bin\Release\net48\rstc.exe" target="tools/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net48\rstc.exe.config" target="tools/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net48\CommandLine.dll" target="tools/" />
-    <file src="..\src\resharper-template-compiler\bin\Release\net48\CommonMark.dll" target="tools/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\net48\MarkDig.dll" target="tools/" />
     <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\rstc.dll" target="tools/netcore/" />
     <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\rstc.runtimeconfig.json" target="tools/netcore/" />
     <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\rstc.deps.json" target="tools/netcore/" />
     <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\CommandLine.dll" target="tools/netcore/" />
-    <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\CommonMark.dll" target="tools/netcore/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\MarkDig.dll" target="tools/netcore/" />
   </files>
 </package>
