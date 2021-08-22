@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CitizenMatt.ReSharper.LiveTemplateCompiler</id>
-    <version>3.0.0</version>
+    <version>3.1.0</version>
     <title>ReSharper Live Template Compiler</title>
     <authors>Matt Ellis</authors>
     <owners>citizenmatt</owners>
@@ -11,6 +11,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MSBuild tooling to convert markdown files into ReSharper Live Templates in a .DotSettings file</description>
     <releaseNotes>
+&#822; Update to .net 5
+
+From 3.0:
 &#822; Update to MarkDig
 &#822; YAML front matter is no longer parsed as Markdown, so can contain characters used in Markdown
 
@@ -57,10 +60,10 @@ From 2.1.0:
     <file src="..\src\resharper-template-compiler\bin\Release\net48\rstc.exe.config" target="tools/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net48\CommandLine.dll" target="tools/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net48\MarkDig.dll" target="tools/" />
-    <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\rstc.dll" target="tools/netcore/" />
-    <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\rstc.runtimeconfig.json" target="tools/netcore/" />
-    <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\rstc.deps.json" target="tools/netcore/" />
-    <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\CommandLine.dll" target="tools/netcore/" />
-    <file src="..\src\resharper-template-compiler\bin\Release\netcoreapp31\MarkDig.dll" target="tools/netcore/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\net5.0\rstc.dll" target="tools/netcore/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\net5.0\rstc.runtimeconfig.json" target="tools/netcore/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\net5.0\rstc.deps.json" target="tools/netcore/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\net5.0\CommandLine.dll" target="tools/netcore/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\net5.0\MarkDig.dll" target="tools/netcore/" />
   </files>
 </package>
