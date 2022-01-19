@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CitizenMatt.ReSharper.LiveTemplateCompiler</id>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
     <title>ReSharper Live Template Compiler</title>
     <authors>Matt Ellis</authors>
     <owners>citizenmatt</owners>
@@ -11,6 +11,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MSBuild tooling to convert markdown files into ReSharper Live Templates in a .DotSettings file</description>
     <releaseNotes>
+&#822; Include dependencies for .net 4.8 build
+
+From 3.1:
 &#822; Update to .net 5
 
 From 3.0:
@@ -60,6 +63,7 @@ From 2.1.0:
     <file src="..\src\resharper-template-compiler\bin\Release\net48\rstc.exe.config" target="tools/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net48\CommandLine.dll" target="tools/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net48\MarkDig.dll" target="tools/" />
+    <file src="..\src\resharper-template-compiler\bin\Release\net48\System.*.dll" target="tools/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net5.0\rstc.dll" target="tools/netcore/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net5.0\rstc.runtimeconfig.json" target="tools/netcore/" />
     <file src="..\src\resharper-template-compiler\bin\Release\net5.0\rstc.deps.json" target="tools/netcore/" />
