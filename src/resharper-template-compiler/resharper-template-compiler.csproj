@@ -9,9 +9,12 @@
     <AssemblyTitle>resharper-template-compiler</AssemblyTitle>
     <Product>resharper-template-compiler</Product>
     <Copyright>Copyright © Matt Ellis 2023</Copyright>
-    <AssemblyVersion>3.3.0.0</AssemblyVersion>
-    <FileVersion>3.3.0.0</FileVersion>
+    <AssemblyVersion>3.4.0.0</AssemblyVersion>
+    <FileVersion>3.4.0.0</FileVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\nuget\resharper-template-compiler.nuspec" Pack="true" PackagePath="\"/>
+  </ItemGroup>
   <ItemGroup>
     <None Include="..\..\nuget\resharper-template-compiler.nuspec" Pack="true" PackagePath="\"/>
   </ItemGroup>

@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CitizenMatt.ReSharper.LiveTemplateCompiler</id>
-    <version>3.3.0</version>
+    <version>3.4.0</version>
     <title>ReSharper Live Template Compiler</title>
     <authors>Matt Ellis</authors>
     <readme>README.md</readme>
@@ -12,6 +12,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MSBuild tooling to convert markdown files into ReSharper Live Templates in a .DotSettings file</description>
     <releaseNotes>
+&#822; Sort templates in README with stable ordinal ordering
+&#822; Add option to allow modifying newline characters used when writing output files
+
+From 3.3:
 &#822; Improve formatting of tables in README
 
 From 3.2:
