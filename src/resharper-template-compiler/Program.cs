@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using CitizenMatt.ReSharper.TemplateCompiler.Markdown;
 using CommandLine;
+using CommandLine.Text;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler
 {
@@ -19,13 +20,26 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var parser = new Parser(settings =>
             {
                 settings.CaseSensitive = false;
-                settings.HelpWriter = Console.Error;
+                settings.CaseInsensitiveEnumValues = true;
+                settings.HelpWriter = null; // So we can provide our own help with enum values
             });
-            return parser.ParseArguments<CompileOptions, DecompileOptions>(args)
+            var parserResult = parser.ParseArguments<CompileOptions, DecompileOptions>(args);
+            return parserResult
                 .MapResult(
                     (CompileOptions compileOptions) => DoCompile(compileOptions),
                     (DecompileOptions decompileOptions) => DoDecompile(decompileOptions),
-                    errs => 1);
+                    _ =>
+                    {
+                        // It's a shame we don't get enum values by default
+                        var helpText = HelpText.AutoBuild(parserResult, h =>
+                        {
+                            h.AddEnumValuesToHelpText = true;
+                            h.AdditionalNewLineAfterOption = false;
+                            return HelpText.DefaultParsingErrorsHandler(parserResult, h);
+                        }, e => e);
+                        Console.Error.WriteLine(helpText);
+                        return 1;
+                    });
         }
 
         private static int DoCompile(CompileOptions compileOptions)
@@ -53,12 +67,16 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             }
 
             var stream = File.Open(compileOptions.OutputFile, FileMode.Create, FileAccess.Write);
-            using(var streamWriter = new StreamWriter(stream))
+            using (var streamWriter = new StreamWriter(stream))
+            {
+                streamWriter.SetNewLine(compileOptions.NewLine);
                 SettingsSerialisation.SerialiseToXaml(streamWriter, serialisation);
+            }
 
             stream = File.Open(compileOptions.ReadMeFile, FileMode.Create, FileAccess.Write);
             using (var streamWriter = new StreamWriter(stream))
             {
+                streamWriter.SetNewLine(compileOptions.NewLine);
                 var readme = new ReadmeFormatter(streamWriter, Path.GetDirectoryName(Path.GetFullPath(compileOptions.ReadMeFile)));
                 readme.FormatTemplates(store);
             }
@@ -89,6 +107,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 var file = File.Open(Path.Combine(decompileOptions.OutDir, filename), FileMode.Create, FileAccess.Write);
                 using (var writer = new StreamWriter(file))
                 {
+                    writer.SetNewLine(decompileOptions.NewLine);
                     var formatter = new TemplateFormatter(writer);
                     formatter.FormatTemplate(template);
                 }
