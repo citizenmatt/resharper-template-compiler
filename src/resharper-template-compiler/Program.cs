@@ -21,25 +21,14 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 settings.CaseSensitive = false;
                 settings.HelpWriter = Console.Error;
             });
-            var result = parser.ParseArguments<CompileOptions, DecompileOptions>(args) as Parsed<object>;
-            if (result == null)
-                return 1;
-
-            switch (result.Value)
-            {
-                case CompileOptions compileOptions:
-                    DoCompile(compileOptions);
-                    break;
-
-                case DecompileOptions decompileOptions:
-                    DoDecompile(decompileOptions);
-                    break;
-            }
-
-            return 0;
+            return parser.ParseArguments<CompileOptions, DecompileOptions>(args)
+                .MapResult(
+                    (CompileOptions compileOptions) => DoCompile(compileOptions),
+                    (DecompileOptions decompileOptions) => DoDecompile(decompileOptions),
+                    errs => 1);
         }
 
-        private static void DoCompile(CompileOptions compileOptions)
+        private static int DoCompile(CompileOptions compileOptions)
         {
             var dictionary = new Dictionary<string, object>();
             var serialisation = new SettingsSerialisation(dictionary);
@@ -73,6 +62,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                 var readme = new ReadmeFormatter(streamWriter, Path.GetDirectoryName(Path.GetFullPath(compileOptions.ReadMeFile)));
                 readme.FormatTemplates(store);
             }
+
+            return 0;
         }
 
         private static IEnumerable<string> GetInputFiles(IEnumerable<string> inputFiles)
@@ -80,7 +71,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             return inputFiles.SelectMany(f => f.Split(';')).SelectMany(f => Directory.GetFiles(".", f));
         }
 
-        private static void DoDecompile(DecompileOptions decompileOptions)
+        private static int DoDecompile(DecompileOptions decompileOptions)
         {
             IList<Template> templates;
 
@@ -102,6 +93,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                     formatter.FormatTemplate(template);
                 }
             }
+
+            return 0;
         }
     }
 }
