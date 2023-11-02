@@ -13,6 +13,9 @@
     <FileVersion>3.3.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\nuget\resharper-template-compiler.nuspec" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Markdig" Version="0.33.0" />
   </ItemGroup>
