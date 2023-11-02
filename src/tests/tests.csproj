@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;netcoreapp31</TargetFrameworks>
+    <TargetFrameworks>net48;net7.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <Copyright>Copyright © Matt Ellis 2023</Copyright>
   </PropertyGroup>
