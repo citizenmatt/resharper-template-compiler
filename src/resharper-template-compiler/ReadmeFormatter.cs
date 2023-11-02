@@ -34,7 +34,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             {
                 writer.WriteLine("Categorised:");
                 writer.WriteLine();
-                foreach (var category in templatesByCategory.Keys.OrderBy(c => c))
+                foreach (var category in templatesByCategory.Keys.OrderBy(c => c, StringComparer.Ordinal))
                     writer.WriteLine("* [{0}](#{1})", category, category.Replace(' ', '_'));
                 writer.WriteLine();
             }
@@ -42,7 +42,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             writer.WriteLine("## All");
             FormatTemplates(templates.Templates);
 
-            foreach (var category in templatesByCategory.Keys.OrderBy(s => s))
+            foreach (var category in templatesByCategory.Keys.OrderBy(s => s, StringComparer.Ordinal))
             {
                 writer.WriteLine("<a name=\"{0}\"></a>", category.Replace(' ', '_'));
                 writer.WriteLine("## Category: {0}", category);
