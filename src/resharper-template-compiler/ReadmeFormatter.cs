@@ -80,7 +80,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             writer.WriteLine("### Live Templates");
             writer.WriteLine();
 
-            var sortedTemplates = templates.OrderBy(t => t.Shortcut).ToList();
+            var sortedTemplates = templates.OrderBy(t => t.Shortcut, StringComparer.Ordinal).ToList();
             var columns = new[]
             {
                 new string[sortedTemplates.Count],
@@ -103,7 +103,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             writer.WriteLine("### File Templates");
             writer.WriteLine();
 
-            var sortedTemplates = templates.OrderBy(t => t.Description).ToList();
+            var sortedTemplates = templates.OrderBy(t => t.Description, StringComparer.Ordinal).ToList();
             var columns = new[] { new string[sortedTemplates.Count] };
             for (var i = 0; i < sortedTemplates.Count; i++)
             {
