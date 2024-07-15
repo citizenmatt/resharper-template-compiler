@@ -52,7 +52,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         private void FormatTemplates(IEnumerable<Template> templates)
         {
-            foreach (var groupedTemplates in templates.GroupBy(t => t.Type))
+            foreach (var groupedTemplates in templates.OrderBy(t => t.Type).GroupBy(t => t.Type))
                 FormatTemplates(groupedTemplates.Key, groupedTemplates.ToList());
         }
 

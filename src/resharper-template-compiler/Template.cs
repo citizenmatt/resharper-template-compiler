@@ -6,9 +6,10 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 {
     public enum TemplateType
     {
-        Live,
-        Surround,
-        File
+        // Values specified to maintain original sort ordering. Do not change!
+        File = 0,
+        Live = 1,
+        Surround = 2
     }
 
     public class Template
