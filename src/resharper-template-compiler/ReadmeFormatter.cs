@@ -76,8 +76,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
 
         private void FormatLiveTemplates(IReadOnlyCollection<Template> templates)
         {
+            GenerateLiveTemplatesTable(templates, "### Live Templates");
+        }
+
+        private void GenerateLiveTemplatesTable(IReadOnlyCollection<Template> templates, string liveTemplates)
+        {
             writer.WriteLine();
-            writer.WriteLine("### Live Templates");
+            writer.WriteLine(liveTemplates);
             writer.WriteLine();
 
             var sortedTemplates = templates.OrderBy(t => t.Shortcut, StringComparer.Ordinal).ToList();
@@ -145,9 +150,9 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             }
         }
 
-        private void FormatSurroundTemplates(IEnumerable<Template> templates)
+        private void FormatSurroundTemplates(IReadOnlyCollection<Template> templates)
         {
-            throw new NotImplementedException("Surround templates not supported in README generation");
+            GenerateLiveTemplatesTable(templates, "### Surround Templates");
         }
 
         private string GetRelativePath(string fullPath)
