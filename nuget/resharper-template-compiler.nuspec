@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CitizenMatt.ReSharper.LiveTemplateCompiler</id>
-    <version>3.6.0</version>
+    <version>3.7.0</version>
     <title>ReSharper Live Template Compiler</title>
     <authors>Matt Ellis</authors>
     <readme>README.md</readme>
@@ -12,6 +12,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MSBuild tooling to convert markdown files into ReSharper Live Templates in a .DotSettings file</description>
     <releaseNotes>
+&#822; Support templates that are both Live and Surround
+&#822; Fix output of Surround templates to generated README
+
+From 3.6:
 &#822; Fix another sorting issue in README, this time with template types
       
 From 3.5:

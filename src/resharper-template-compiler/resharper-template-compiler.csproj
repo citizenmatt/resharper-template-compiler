@@ -8,9 +8,9 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AssemblyTitle>resharper-template-compiler</AssemblyTitle>
     <Product>resharper-template-compiler</Product>
-    <Copyright>Copyright © Matt Ellis 2023</Copyright>
-    <AssemblyVersion>3.6.0.0</AssemblyVersion>
-    <FileVersion>3.6.0.0</FileVersion>
+    <Copyright>Copyright © Matt Ellis 2025</Copyright>
+    <AssemblyVersion>3.7.0.0</AssemblyVersion>
+    <FileVersion>3.7.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\nuget\resharper-template-compiler.nuspec" Pack="true" PackagePath="\"/>
