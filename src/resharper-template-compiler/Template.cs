@@ -4,12 +4,13 @@ using System.Linq;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler
 {
+    [Flags]
     public enum TemplateType
     {
-        // Values specified to maintain original sort ordering. Do not change!
-        File = 0,
-        Live = 1,
-        Surround = 2
+        File,
+        Live,                   // Rider uses "Generation" in the UI
+        Surround,
+        Both = Live | Surround  // Rider uses "Both" to mean Live+Surround
     }
 
     public class Template

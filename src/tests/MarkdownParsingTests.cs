@@ -45,6 +45,78 @@ xUnit.net [Theory]
         }
 
         [Test]
+        public void Should_parse_simple_surround_template()
+        {
+            const string markdown =
+                @"---
+guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
+type: surround
+reformat: true
+shortenReferences: true
+---
+
+# tda
+
+xUnit.net [Theory]
+
+```cs
+[Xunit.Extensions.Theory]
+```
+";
+
+            var parser = new TemplateParser();
+            var template = parser.Parse(markdown);
+
+            Assert.NotNull(template);
+            Assert.AreEqual(new Guid("{04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}"), template.Guid);
+            Assert.AreEqual(TemplateType.Surround, template.Type);
+            Assert.AreEqual("tda", template.Shortcut);
+            Assert.AreEqual("xUnit.net [Theory]", template.Description);
+            Assert.AreEqual("[Xunit.Extensions.Theory]", template.Text);
+            Assert.AreEqual(true, template.Reformat);
+            Assert.AreEqual(true, template.ShortenQualifiedReferences);
+            Assert.IsEmpty(template.Categories);
+            Assert.IsEmpty(template.Scopes);
+            Assert.IsEmpty(template.Fields);
+        }
+
+        [Test]
+        public void Should_parse_simple_live_and_surround_template()
+        {
+            const string markdown =
+                @"---
+guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
+type: Both
+reformat: true
+shortenReferences: true
+---
+
+# tda
+
+xUnit.net [Theory]
+
+```cs
+[Xunit.Extensions.Theory]
+```
+";
+
+            var parser = new TemplateParser();
+            var template = parser.Parse(markdown);
+
+            Assert.NotNull(template);
+            Assert.AreEqual(new Guid("{04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}"), template.Guid);
+            Assert.AreEqual(TemplateType.Both, template.Type);
+            Assert.AreEqual("tda", template.Shortcut);
+            Assert.AreEqual("xUnit.net [Theory]", template.Description);
+            Assert.AreEqual("[Xunit.Extensions.Theory]", template.Text);
+            Assert.AreEqual(true, template.Reformat);
+            Assert.AreEqual(true, template.ShortenQualifiedReferences);
+            Assert.IsEmpty(template.Categories);
+            Assert.IsEmpty(template.Scopes);
+            Assert.IsEmpty(template.Fields);
+        }
+
+        [Test]
         public void Should_parse_simple_file_template()
         {
             const string markdown =

@@ -9,7 +9,7 @@ namespace tests
     public class SerialisationTests
     {
         [Test]
-        public void Should_round_trip_simple_template()
+        public void Should_round_trip_live_template()
         {
             var template = GetBaseLiveTemplate();
 
@@ -29,9 +29,53 @@ namespace tests
             Assert.AreEqual(template.ShortenQualifiedReferences, templates[0].ShortenQualifiedReferences);
         }
 
+        [Test]
+        public void Should_round_trip_surround_template()
+        {
+            var template = GetBaseLiveTemplate();
+            template.Type = TemplateType.Surround;
+
+            var dictionary = Serialise(template);
+            var deserialiser = new SettingsDeserialisation(dictionary);
+            var templates = deserialiser.DeserialiseTemplates();
+
+            Assert.NotNull(templates);
+            Assert.AreEqual(1, templates.Count);
+            Assert.AreEqual(template.Guid, templates[0].Guid);
+            Assert.AreEqual(TemplateType.Surround, templates[0].Type);
+            Assert.AreEqual(template.Type, templates[0].Type);
+            Assert.AreEqual(template.Shortcut, templates[0].Shortcut);
+            Assert.AreEqual(template.Description, templates[0].Description);
+            Assert.AreEqual(template.Text, templates[0].Text);
+            Assert.AreEqual(template.Reformat, templates[0].Reformat);
+            Assert.AreEqual(template.ShortenQualifiedReferences, templates[0].ShortenQualifiedReferences);
+        }
 
         [Test]
-        public void Should_round_trip_live_template()
+        public void Should_round_trip_live_and_surround_template()
+        {
+            var template = GetBaseLiveTemplate();
+            template.Type = TemplateType.Both;
+
+            var dictionary = Serialise(template);
+            var deserialiser = new SettingsDeserialisation(dictionary);
+            var templates = deserialiser.DeserialiseTemplates();
+
+            Assert.NotNull(templates);
+            Assert.AreEqual(1, templates.Count);
+            Assert.AreEqual(template.Guid, templates[0].Guid);
+            Assert.AreEqual(TemplateType.Both, templates[0].Type);
+            Assert.AreEqual(template.Type, templates[0].Type);
+            Assert.AreEqual(template.Shortcut, templates[0].Shortcut);
+            Assert.AreEqual(template.Description, templates[0].Description);
+            Assert.AreEqual(template.Text, templates[0].Text);
+            Assert.AreEqual(template.Reformat, templates[0].Reformat);
+            Assert.AreEqual(template.ShortenQualifiedReferences, templates[0].ShortenQualifiedReferences);
+        }
+
+
+        [Test]
+        public void Should_round_trip_file_template()
         {
             var template = GetBaseFileTemplate();
 

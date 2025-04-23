@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace CitizenMatt.ReSharper.TemplateCompiler
@@ -35,8 +36,18 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             var templateKey = SerialisationMetadata.FormatKey(SerialisationMetadata.FormatGuid(guid));
             var templatePath = MakePath(RootPath, templateKey);
             var template = new Template {Guid = guid};
-            var index = GetIndexedValues<bool>(templatePath, "Applicability").First().Key;
-            Enum.TryParse(index, out template.Type);
+            foreach (var keyValuePair in GetIndexedValues<bool>(templatePath, "Applicability"))
+            {
+                // "Both" is serialised as two entries - "Live" and "Surround", both of which will be true. If the user
+                // changes this, the settings system might delete one of the entries, or write it with a value of false
+                if (keyValuePair.Value)
+                {
+                    if (keyValuePair.Key == "Both")
+                        throw new InvalidDataException("Both is not a valid value for ReSharper templates");
+                    Enum.TryParse(keyValuePair.Key, out TemplateType type);
+                    template.Type |= type;
+                }
+            }
             if (template.Type != TemplateType.File)
                 template.Shortcut = GetValue<string>(templatePath, "Shortcut");
             if (!TryGetValue(templatePath, "Description", out string description))

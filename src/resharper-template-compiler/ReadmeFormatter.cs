@@ -40,23 +40,24 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             }
 
             writer.WriteLine("## All");
-            FormatTemplates(templates.Templates);
+            FormatTemplates(templates.Templates.ToList());
 
             foreach (var category in templatesByCategory.Keys.OrderBy(s => s, StringComparer.Ordinal))
             {
                 writer.WriteLine("<a name=\"{0}\"></a>", category.Replace(' ', '_'));
                 writer.WriteLine("## Category: {0}", category);
-                FormatTemplates(templatesByCategory[category]);
+                FormatTemplates(templatesByCategory[category].ToList());
             }
         }
 
-        private void FormatTemplates(IEnumerable<Template> templates)
+        private void FormatTemplates(IReadOnlyCollection<Template> templates)
         {
-            foreach (var groupedTemplates in templates.OrderBy(t => t.Type).GroupBy(t => t.Type))
-                FormatTemplates(groupedTemplates.Key, groupedTemplates.ToList());
+            FormatTemplates(TemplateType.File, templates.Where(t => t.Type.HasFlag(TemplateType.File)));
+            FormatTemplates(TemplateType.Live, templates.Where(t => t.Type.HasFlag(TemplateType.Live)));
+            FormatTemplates(TemplateType.Surround, templates.Where(t => t.Type.HasFlag(TemplateType.Surround)));
         }
 
-        private void FormatTemplates(TemplateType templateType, IReadOnlyCollection<Template> templates)
+        private void FormatTemplates(TemplateType templateType, IEnumerable<Template> templates)
         {
             switch(templateType)
             {
@@ -74,18 +75,25 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             }
         }
 
-        private void FormatLiveTemplates(IReadOnlyCollection<Template> templates)
+        private void FormatLiveTemplates(IEnumerable<Template> templates)
         {
-            GenerateLiveTemplatesTable(templates, "### Live Templates");
+            GenerateLiveTemplatesTable(templates, "Live Templates");
         }
 
-        private void GenerateLiveTemplatesTable(IReadOnlyCollection<Template> templates, string liveTemplates)
+        private void FormatSurroundTemplates(IEnumerable<Template> templates)
         {
+            GenerateLiveTemplatesTable(templates, "Surround Templates");
+        }
+
+        private void GenerateLiveTemplatesTable(IEnumerable<Template> templates, string title)
+        {
+            var sortedTemplates = templates.OrderBy(t => t.Shortcut, StringComparer.Ordinal).ToList();
+            if (!sortedTemplates.Any()) return;
+
             writer.WriteLine();
-            writer.WriteLine(liveTemplates);
+            writer.WriteLine("### " + title);
             writer.WriteLine();
 
-            var sortedTemplates = templates.OrderBy(t => t.Shortcut, StringComparer.Ordinal).ToList();
             var columns = new[]
             {
                 new string[sortedTemplates.Count],
@@ -148,11 +156,6 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
                     writer.Write(" " + columns[j][i].PadRight(columnWidths[j]) + " |");
                 writer.WriteLine();
             }
-        }
-
-        private void FormatSurroundTemplates(IReadOnlyCollection<Template> templates)
-        {
-            GenerateLiveTemplatesTable(templates, "### Surround Templates");
         }
 
         private string GetRelativePath(string fullPath)

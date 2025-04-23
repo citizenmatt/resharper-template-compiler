@@ -29,7 +29,13 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             templateSettings.AddValue("Image", template.Image);
             templateSettings.AddValue("Reformat", template.Reformat);
             templateSettings.AddValue("ShortenQualifiedReferences", template.ShortenQualifiedReferences);
-            templateSettings.AddIndexedValue("Applicability", template.Type.ToString(), true);
+            if (template.Type == TemplateType.Both)
+            {
+                templateSettings.AddIndexedValue("Applicability", nameof(TemplateType.Live), true);
+                templateSettings.AddIndexedValue("Applicability", nameof(TemplateType.Surround), true);
+            }
+            else
+                templateSettings.AddIndexedValue("Applicability", template.Type.ToString(), true);
             AddCustomProperties(templateSettings, template.CustomProperties);
             AddCategories(templateSettings, template.Categories);
             AddScopes(templateSettings, template.Scopes);
