@@ -20,6 +20,7 @@
 **/.idea/**/*.iml
 **/.idea/**/modules.xml
 **/.idea/**/contentModel.xml
+**/.idea/**/projectSettingsUpdater.xml
 
 *.suo
 *.user
