@@ -57,6 +57,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
             template.Image = TryGetValue(templatePath, "Image", (string) null);
             template.Reformat = TryGetValue(templatePath, "Reformat", true);
             template.ShortenQualifiedReferences = TryGetValue(templatePath, "ShortenQualifiedReferences", true);
+            template.BuildAction = TryGetValue<string>(templatePath, "BuildAction", null);
             template.Scopes = DeserialiseScopes(templatePath);
             template.CustomProperties = DeserialiseCustomProperties(templatePath);
             template.Categories = DeserialiseCategories(templatePath);

@@ -17,6 +17,7 @@ guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
 type: live
 reformat: true
 shortenReferences: true
+buildAction: PreDeploy
 ---
 
 # tda
@@ -39,6 +40,7 @@ xUnit.net [Theory]
             Assert.AreEqual("[Xunit.Extensions.Theory]", template.Text);
             Assert.AreEqual(true, template.Reformat);
             Assert.AreEqual(true, template.ShortenQualifiedReferences);
+            Assert.AreEqual("PreDeploy", template.BuildAction);
             Assert.IsEmpty(template.Categories);
             Assert.IsEmpty(template.Scopes);
             Assert.IsEmpty(template.Fields);
@@ -53,6 +55,7 @@ guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
 type: surround
 reformat: true
 shortenReferences: true
+buildAction: PreDeploy
 ---
 
 # tda
@@ -75,6 +78,7 @@ xUnit.net [Theory]
             Assert.AreEqual("[Xunit.Extensions.Theory]", template.Text);
             Assert.AreEqual(true, template.Reformat);
             Assert.AreEqual(true, template.ShortenQualifiedReferences);
+            Assert.AreEqual("PreDeploy", template.BuildAction);
             Assert.IsEmpty(template.Categories);
             Assert.IsEmpty(template.Scopes);
             Assert.IsEmpty(template.Fields);
@@ -89,6 +93,7 @@ guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
 type: Both
 reformat: true
 shortenReferences: true
+buildAction: PreDeploy
 ---
 
 # tda
@@ -111,6 +116,7 @@ xUnit.net [Theory]
             Assert.AreEqual("[Xunit.Extensions.Theory]", template.Text);
             Assert.AreEqual(true, template.Reformat);
             Assert.AreEqual(true, template.ShortenQualifiedReferences);
+            Assert.AreEqual("PreDeploy", template.BuildAction);
             Assert.IsEmpty(template.Categories);
             Assert.IsEmpty(template.Scopes);
             Assert.IsEmpty(template.Fields);
@@ -125,6 +131,7 @@ guid: 5ff5ac38-7207-4256-91ae-b5436552db13
 type: File
 reformat: True
 shortenReferences: True
+buildAction: PreDeploy
 customProperties: Extension=cs, FileName=NewBehaviour, ValidateFileName=True
 scopes: InCSharpProject
 ---
@@ -147,6 +154,7 @@ public class Foo {}
             Assert.AreEqual("public class Foo {}", template.Text);
             Assert.AreEqual(true, template.Reformat);
             Assert.AreEqual(true, template.ShortenQualifiedReferences);
+            Assert.AreEqual("PreDeploy", template.BuildAction);
             Assert.IsEmpty(template.Categories);
             Assert.AreEqual(1, template.Scopes.Count);
             Assert.AreEqual("InCSharpProject", template.Scopes[0].Type);

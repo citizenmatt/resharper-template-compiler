@@ -23,6 +23,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler
         public string Image;    // Not exposed in the UI. The name of an instance of TemplateImage mapping a name to an IconId
         public bool Reformat;
         public bool ShortenQualifiedReferences;
+        public string BuildAction;
         public IDictionary<string, string> CustomProperties = new Dictionary<string, string>();
         public IList<string> Categories = new List<string>();
         public IList<Scope> Scopes = new List<Scope>();
