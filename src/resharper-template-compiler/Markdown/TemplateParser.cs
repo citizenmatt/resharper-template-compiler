@@ -32,6 +32,7 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
                 Image = GetString(metadata, "image", null),
                 Reformat = GetBool(metadata, "reformat", true),
                 ShortenQualifiedReferences = GetBool(metadata, "shortenReferences", true),
+                BuildAction = GetString(metadata, "buildAction", null),
                 CustomProperties = ParseCustomProperties(metadata),
                 Categories = ParseCategories(metadata),
                 Scopes = ParseScopes(metadata),
