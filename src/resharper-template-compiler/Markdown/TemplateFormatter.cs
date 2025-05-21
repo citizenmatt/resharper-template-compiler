@@ -23,6 +23,8 @@ namespace CitizenMatt.ReSharper.TemplateCompiler.Markdown
             writer.WriteLine("type: {0}", template.Type);
             writer.WriteLine("reformat: {0}", template.Reformat);
             writer.WriteLine("shortenReferences: {0}", template.ShortenQualifiedReferences);
+            if (template.BuildAction != null)
+                writer.WriteLine("buildAction: {0}", template.BuildAction);
             if (template.Categories.Any())
                 writer.WriteLine("categories: {0}", string.Join(", ", template.Categories));
             FormatCustomProperties(template);

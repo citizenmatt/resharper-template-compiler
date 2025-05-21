@@ -93,6 +93,7 @@ namespace tests
             Assert.AreEqual(template.Text, templates[0].Text);
             Assert.AreEqual(template.Reformat, templates[0].Reformat);
             Assert.AreEqual(template.ShortenQualifiedReferences, templates[0].ShortenQualifiedReferences);
+            Assert.AreEqual(template.BuildAction, templates[0].BuildAction);
         }
 
         [Test]
@@ -286,7 +287,8 @@ namespace tests
                 Text = "text",
                 Reformat = true,
                 Scopes = new List<Scope> { new Scope("InCSharpProject", Guid.NewGuid()) },
-                ShortenQualifiedReferences = true
+                ShortenQualifiedReferences = true,
+                BuildAction = "PreDeploy"
             };
         }
 

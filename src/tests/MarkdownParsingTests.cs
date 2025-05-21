@@ -125,6 +125,7 @@ guid: 5ff5ac38-7207-4256-91ae-b5436552db13
 type: File
 reformat: True
 shortenReferences: True
+buildAction: PreDeploy
 customProperties: Extension=cs, FileName=NewBehaviour, ValidateFileName=True
 scopes: InCSharpProject
 ---
@@ -147,6 +148,7 @@ public class Foo {}
             Assert.AreEqual("public class Foo {}", template.Text);
             Assert.AreEqual(true, template.Reformat);
             Assert.AreEqual(true, template.ShortenQualifiedReferences);
+            Assert.AreEqual("PreDeploy", template.BuildAction);
             Assert.IsEmpty(template.Categories);
             Assert.AreEqual(1, template.Scopes.Count);
             Assert.AreEqual("InCSharpProject", template.Scopes[0].Type);
