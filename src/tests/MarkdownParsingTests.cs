@@ -17,7 +17,6 @@ guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
 type: live
 reformat: true
 shortenReferences: true
-buildAction: PreDeploy
 ---
 
 # tda
@@ -40,7 +39,6 @@ xUnit.net [Theory]
             Assert.AreEqual("[Xunit.Extensions.Theory]", template.Text);
             Assert.AreEqual(true, template.Reformat);
             Assert.AreEqual(true, template.ShortenQualifiedReferences);
-            Assert.AreEqual("PreDeploy", template.BuildAction);
             Assert.IsEmpty(template.Categories);
             Assert.IsEmpty(template.Scopes);
             Assert.IsEmpty(template.Fields);
@@ -55,7 +53,6 @@ guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
 type: surround
 reformat: true
 shortenReferences: true
-buildAction: PreDeploy
 ---
 
 # tda
@@ -78,7 +75,6 @@ xUnit.net [Theory]
             Assert.AreEqual("[Xunit.Extensions.Theory]", template.Text);
             Assert.AreEqual(true, template.Reformat);
             Assert.AreEqual(true, template.ShortenQualifiedReferences);
-            Assert.AreEqual("PreDeploy", template.BuildAction);
             Assert.IsEmpty(template.Categories);
             Assert.IsEmpty(template.Scopes);
             Assert.IsEmpty(template.Fields);
@@ -93,7 +89,6 @@ guid: {04BEDCE3-7CC8-48CE-92C4-A95A72C8B0F6}
 type: Both
 reformat: true
 shortenReferences: true
-buildAction: PreDeploy
 ---
 
 # tda
@@ -116,7 +111,6 @@ xUnit.net [Theory]
             Assert.AreEqual("[Xunit.Extensions.Theory]", template.Text);
             Assert.AreEqual(true, template.Reformat);
             Assert.AreEqual(true, template.ShortenQualifiedReferences);
-            Assert.AreEqual("PreDeploy", template.BuildAction);
             Assert.IsEmpty(template.Categories);
             Assert.IsEmpty(template.Scopes);
             Assert.IsEmpty(template.Fields);

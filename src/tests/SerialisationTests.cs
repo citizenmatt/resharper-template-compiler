@@ -27,7 +27,6 @@ namespace tests
             Assert.AreEqual(template.Text, templates[0].Text);
             Assert.AreEqual(template.Reformat, templates[0].Reformat);
             Assert.AreEqual(template.ShortenQualifiedReferences, templates[0].ShortenQualifiedReferences);
-            Assert.AreEqual(template.BuildAction, templates[0].BuildAction);
         }
 
         [Test]
@@ -50,7 +49,6 @@ namespace tests
             Assert.AreEqual(template.Text, templates[0].Text);
             Assert.AreEqual(template.Reformat, templates[0].Reformat);
             Assert.AreEqual(template.ShortenQualifiedReferences, templates[0].ShortenQualifiedReferences);
-            Assert.AreEqual(template.BuildAction, templates[0].BuildAction);
         }
 
         [Test]
@@ -73,7 +71,6 @@ namespace tests
             Assert.AreEqual(template.Text, templates[0].Text);
             Assert.AreEqual(template.Reformat, templates[0].Reformat);
             Assert.AreEqual(template.ShortenQualifiedReferences, templates[0].ShortenQualifiedReferences);
-            Assert.AreEqual(template.BuildAction, templates[0].BuildAction);
         }
 
 
@@ -276,8 +273,7 @@ namespace tests
                 Description = "description",
                 Text = "text",
                 Reformat = true,
-                ShortenQualifiedReferences = true,
-                BuildAction = "PreDeploy"
+                ShortenQualifiedReferences = true
             };
         }
 
